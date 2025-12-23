@@ -1,0 +1,35 @@
+< entrada.txt cat | grep "erro fatal" > log.txt
+
+// NÓ 1 (t_cmd)
+{
+    // O parser "pescou" o comando 'cat' do final da string
+    .args = {"cat", NULL},
+
+    // A lista de redirecionamentos deste comando
+    .redirs = {
+        // NÓ DA LISTA DE REDIR (t_redir)
+        .type = REDIR_IN,       // Representa o '<'
+        .file = "entrada.txt",  // O arquivo a ser lido
+        .next = NULL            // Só tem um redirecionamento aqui
+    },
+
+    // Existe um pipe '|' depois, então aponta para o próximo
+    .next = &segundo_comando
+}
+
+// NÓ 2 (t_cmd)
+{
+    // O parser limpou as aspas e montou o vetor
+    .args = {"grep", "erro fatal", NULL},
+
+    // A lista de redirecionamentos deste comando
+    .redirs = {
+        // NÓ DA LISTA DE REDIR (t_redir)
+        .type = REDIR_OUT,      // Representa o '>'
+        .file = "log.txt",      // O arquivo onde salvar
+        .next = NULL
+    },
+
+    // Não tem mais pipes ou comandos
+    .next = NULL
+}

@@ -1,0 +1,4 @@
+echo start > tmp_a && echo more >> tmp_a
+cat tmp_a
+rm tmp_a
+exit

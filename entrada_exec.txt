@@ -1,0 +1,31 @@
+Entrada para o executor: um ponteiro para a lista de comandos t_cmd * (definida em parser.h).
+Cada t_cmd tem:
+char **argv — array NULL-terminated de strings (cada elemento já é a palavra final produzida pelo parser; as aspas já foram removidas pelo lexer).
+t_redir *redirs — lista ligada de redirecionamentos, cada um com um tipo (REDIR_IN/OUT/APPEND/HEREDOC) e target (string, por exemplo "file.txt" ou nome de ficheiro temporário para heredoc).
+t_cmd *next — próximo comando no pipeline (NULL se não houver).
+Observação importante: a expansão ($VAR, $?) ainda não foi implementada — portanto argv contém textos literais resultantes do lexer (sem aspas), possivelmente com $ se não houver expander. A flag t_token.no_expand existe no token, mas o parser já converteu tokens em argv; se quiser expander, normalmente chama-se expander antes de converter em argv ou se expande argv depois do parser.
+Proprietário da memória: o parser aloca argv e redir->target (via strdup) e fornece funções free_commands para liberar; o executor normalmente NÃO deve liberar essas strings — o código que chamou o parser (por exemplo, o controlador que chama o executor) é o responsável por liberar a lista depois que a execução terminar.
+Exemplo 1 — comando simples com pipe: "ls | grep txt"
+
+O executor receberá um ponteiro para uma lista t_cmd *head com duas entradas encadeadas.
+Representação em C (conceitual)
+
+head -> (t_cmd #1) -> (t_cmd #2) -> NULL
+Conteúdo de cada node:
+
+t_cmd #1:
+
+argv: ["ls", NULL]
+redirs: NULL
+next: pointer para t_cmd #2
+t_cmd #2:
+
+argv: ["grep", "txt", NULL]
+redirs: NULL
+next: NULL
+Como o executor usaria (exemplo de travessia)
+
+Para executar: criar pipe(), fork() para cada comando, configurar dup2:
+cmd #1: stdout duplicado para write-end do pipe
+cmd #2: stdin duplicado para read-end do pipe
+Em cada filho, aplicar redirecionamentos listados em redirs (nenhum neste caso), depois execve(argv[0], argv, envp) (com lookup em PATH quando necessário).

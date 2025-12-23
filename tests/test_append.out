@@ -1,0 +1,5 @@
+minishell$ echo start > tmp_a && echo more >> tmp_a
+minishell$ cat tmp_a
+minishell$ rm tmp_a
+minishell$ exit
+minishell$ 

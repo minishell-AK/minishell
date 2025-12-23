@@ -1,0 +1,8 @@
+minishell$ echo hello >
+parse error: redirection without target
+minishell$ cat <
+parse error: redirection without target
+minishell$ | echo pipetest
+parse error: pipe with no command before
+minishell$ exit
+minishell$ 
