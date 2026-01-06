@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:03:07 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/12/19 20:30:43 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/06 18:42:44 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_token	*lexer_tokenize(const char *line)
 	size_t	i;
 	size_t	len;
 	t_token	*head;
+	t_token	*end_tok;
 
 	i = 0;
 	len = 0;
@@ -70,5 +71,8 @@ t_token	*lexer_tokenize(const char *line)
 		if (collect_word(line, &i, len, &head) != 0)
 			return (head);
 	}
+	end_tok = token_new(TOK_END, "");
+	if (end_tok)
+		token_append(&head, end_tok);
 	return (head);
 }

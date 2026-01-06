@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   free_all_variables.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/18 19:05:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:21 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/12/16 13:52:08 by armeneze          #+#    #+#             */
+/*   Updated: 2026/01/03 16:36:00 by armeneze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include <stdlib.h>
+#include "minishell.h"
+#include "exec.h"
 
 static void	free_redirs(t_redir *r)
 {
@@ -27,7 +27,7 @@ static void	free_redirs(t_redir *r)
 	}
 }
 
-void	free_commands(t_cmd *cmds)
+void	free_all_commands(t_cmd *cmds)
 {
 	t_cmd	*c;
 	t_cmd	*tmp;
@@ -51,4 +51,29 @@ void	free_commands(t_cmd *cmds)
 		free(c);
 		c = tmp;
 	}
+}
+
+void	free_all_variables(t_all_variables *all_variables)
+{
+	size_t	i;
+
+	if (!all_variables)
+		return ;
+	if (all_variables->env)
+		free(all_variables->env);
+	if (all_variables->path)
+	{
+		i = 0;
+		while (all_variables->path[i])
+		{
+			free(all_variables->path[i]);
+			i++;
+		}
+		free(all_variables->path);
+	}
+	if (all_variables->pids)
+		free(all_variables->pids);
+	if (all_variables->cmd)
+		free_all_commands(all_variables->cmd);
+	free(all_variables);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/12/23 12:37:43 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/06 18:42:48 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	process_line(char *line, char ***envp_ref)
 {
 	t_token		*tokens;
 	t_cmd		*cmd;
+	t_all_variables	*all;
 
 	add_history(line);
 	tokens = lexer_tokenize(line);
@@ -71,8 +72,15 @@ static void	process_line(char *line, char ***envp_ref)
 		token_free_all(tokens);
 		if (cmd)
 		{
-			exec_cmd(cmd);
-			free_commands(cmd);
+			all = add_variables(cmd, *envp_ref);
+			if (!all)
+			{
+				fprintf(stderr, "minishell: failed to prepare execution\n");
+				free_commands(cmd);
+				return ;
+			}
+			ft_exit(all, line);
+			exec_cmd(all);
 		}
 	}
 }

@@ -15,6 +15,7 @@
 #include "minishell.h"
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 t_cmd	*cmd_new(void)
 {
@@ -23,6 +24,8 @@ t_cmd	*cmd_new(void)
 	c = malloc(sizeof(t_cmd));
 	if (!c)
 		return (NULL);
+	c->pipein = STDIN_FILENO;
+	c->pipeout = STDOUT_FILENO;
 	c->args = NULL;
 	c->redirs = NULL;
 	c->next = NULL;

@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_char.c                                       :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 20:26:45 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:51 by kakubo-l         ###   ########.fr       */
+/*   Created: 2026/01/05 18:17:06 by armeneze          #+#    #+#             */
+/*   Updated: 2026/01/05 18:27:00 by armeneze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
 
-int	is_space_char(int c)
+int	ft_env(char **env, char **args)
 {
-	if (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r')
+	int	i;
+
+	if (count_size_array_char(args) > 1)
+	{
+		ft_putstr_fd("env: too many arguments\n", 1);
+		return (0);
+	}
+	if (!env)
 		return (1);
+	i = 0;
+	while (env[i])
+	{
+		ft_putstr_fd(env[i], 1);
+		write(1, "\n", 1);
+		i++;
+	}
 	return (0);
 }

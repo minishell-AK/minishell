@@ -61,34 +61,33 @@ Funcionalidade básica
 - [x] Implementar apenas uma variável global para sinal (apenas número do sinal). (implementado: `g_last_signal` como `sig_atomic_t`)
 
 Parsing e expansão
-- [x] Tokenização básica implementada (palavras, pipes `|`, redirecionadores `<`, `>`, `>>`, `<<`) — `lexer_tokenize` em `src/lexer.c` junto com helpers em `src/lexer_helpers.c`.
+- [x] Tokenização básica implementada (palavras, pipes `|`, redirecionadores `<`, `>`, `>>`, `<<`) — `lexer_tokenize` em `src/lexer.c` junto com helpers em `src/lexer_helpers.c`, com `TOK_END` sentinel adicionado.
 - [x] Tratamento de aspas (remoção das aspas no token final) implementado: `collect_word` constrói tokens sem as aspas.
- - [x] Tratamento completo de aspas duplas (expansão dentro de `"..."`) — lexer cria segmentos e `src/expander.c` faz expansão nos segmentos duplamente citados; escapes dentro de `"` ainda não totalmente tratados.
- - [x] Expansão de variáveis `$VAR` e `$?` usando o ambiente e último status — implementado (`src/expander.c`), atualmente sem word-splitting (expansão preserva o token como único argumento).
- - [x] Heredoc (`<<`) leitura e armazenamento (arquivo temporário) implementados: o parser lê as linhas do heredoc usando `readline("heredoc> ")`, cria um arquivo temporário com `mkstemp()` e escreve o conteúdo nele; o caminho do tmpfile é guardado em um `t_redir` com tipo `HEREDOC`. A expansão de variáveis dentro do heredoc é aplicada apenas se o delimitador não estiver citado (quando o delimitador contém aspas, a expansão é desativada). Documentem quem fará o `unlink()` do tmpfile (executor ou controlador).
+ - [x] Tratamento completo de aspas duplas (expansão dentro de `"..."`) — lexer cria segmentos e `src/expander.c` faz expansão nos segmentos duplamente citados.
+ - [x] Expansão de variáveis `$VAR` e `$?` usando o ambiente e último status — implementado (`src/expander.c`, `src/expander_env.c`, `src/expander_utils.c`).
+ - [x] Heredoc (`<<`) leitura e armazenamento (arquivo temporário) implementados: o parser lê as linhas do heredoc usando `readline("heredoc> ")`, cria um arquivo temporário com `mkstemp()` e escreve o conteúdo nele; o caminho do tmpfile é guardado em um `t_redir` com tipo `HEREDOC`. A expansão de variáveis dentro do heredoc é aplicada apenas se o delimitador não estiver citado (implementado em `src/parser_heredoc.c`, `src/parser_heredoc_utils.c`, `src/parser_heredoc_tmp.c`).
 
 Parser (tokens -> comandos)
-- [x] Parser simples implementado (`src/parser.c`, `include/parser.h`): agrupa `TOK_WORD` em `argv`, associa redirecionamentos ao comando correto, e separa comandos por `TOK_PIPE`.
-
+- [x] Parser completo implementado (`src/parser.c`, `src/parser_cmd.c`, `src/parser_helpers.c`, `src/parser_redir.c`, `src/parser_utils.c`, `include/parser.h`): agrupa `TOK_WORD` em `argv`, associa redirecionamentos ao comando correto, separa comandos por `TOK_PIPE`, e processa até encontrar `TOK_END`.
 
 Execução
-- [ ] Executar comandos por caminho absoluto/relativo ou pesquisando em `PATH`.
-- [ ] Redirecionamentos de I/O com `open`, `dup2`, `close`:
-  - [ ] `<` entrada
-  - [ ] `>` saída (truncate)
-  - [ ] `>>` saída (append)
-  - [ ] `<<` heredoc
-- [ ] Pipes (`|`) que conectam n comandos encadeados.
-- [ ] Fechar descritores corretos e evitar leaks entre processos.
+- [x] Executar comandos por caminho absoluto/relativo ou pesquisando em `PATH` (implementado em `src/exec/find_path.c` com busca no PATH e verificação de acesso).
+- [x] Redirecionamentos de I/O com `open`, `dup2`, `close`:
+  - [x] `<` entrada (implementado em `src/exec/open_file.c` e `src/exec/setup_child.c`)
+  - [x] `>` saída (truncate) (implementado em `src/exec/open_file.c` e `src/exec/setup_child.c`)
+  - [x] `>>` saída (append) (implementado em `src/exec/open_file.c` e `src/exec/setup_child.c`)
+  - [x] `<<` heredoc (suportado via arquivo temporário criado pelo parser)
+- [x] Pipes (`|`) que conectam n comandos encadeados (implementado em `src/exec/add_pipe.c` e `src/exec/exe_cmd.c` usando fork + pipe + dup2).
+- [x] Fechar descritores corretos e evitar leaks entre processos (implementado em `src/exec/close_pipe.c` e `src/exec/setup_child.c`).
 
 Builtins (comportamento mínimo)
-- [ ] `echo` com suporte a `-n` (apagar newline quando `-n`).
-- [ ] `cd` aceita apenas um caminho relativo ou absoluto (sem flags). Atualizar `PWD`/`OLDPWD` corretamente.
-- [ ] `pwd` sem opções imprime diretório atual.
-- [ ] `export` sem opções: adicionar/atualizar variáveis de ambiente.
-- [ ] `unset` sem opções: remover variáveis de ambiente.
-- [ ] `env` sem argumentos imprime variáveis de ambiente.
-- [ ] `exit` sem opções sai do shell com o código apropriado.
+- [x] `echo` com suporte a `-n` (apagar newline quando `-n`) — implementado em `src/exec/builtin/ft_echo.c`.
+- [ ] `cd` aceita apenas um caminho relativo ou absoluto (sem flags). Atualizar `PWD`/`OLDPWD` corretamente — esqueleto presente mas comentado em `src/exec/builtin/is_builtin.c`.
+- [x] `pwd` sem opções imprime diretório atual — implementado em `src/exec/builtin/ft_pwd.c`.
+- [ ] `export` sem opções: adicionar/atualizar variáveis de ambiente — esqueleto presente mas comentado em `src/exec/builtin/is_builtin.c`.
+- [ ] `unset` sem opções: remover variáveis de ambiente — esqueleto presente mas comentado em `src/exec/builtin/is_builtin.c`.
+- [x] `env` sem argumentos imprime variáveis de ambiente — implementado em `src/exec/builtin/ft_env.c`.
+- [x] `exit` sem opções sai do shell com o código apropriado — implementado em `src/exec/builtin/ft_exit.c` (verifica se comando é exit e encerra).
 
 Sinais
  - [x] Implementar tratamento de SIGINT (Ctrl-C) e SIGQUIT (Ctrl-\) com a única variável global. (implementado em `src/main.c`)
@@ -99,17 +98,17 @@ Observação: o repasse correto de sinais para processos filhos em pipelines ain
 
 Memória e qualidade
 - [x] `free(line)` após uso (implementado em `src/main.c`)
-- [ ] Verificação de leaks do código que vocês escreveram (valgrind/sanitizer recomendado)
-- [ ] Não utilizar globals além da variável de sinal.
+- [x] Sistema de free completo implementado (`src/free_all_variables.c` com `free_all_commands`, `free_redirs`, liberação de env, path, pids)
+- [x] Não utilizar globals além da variável de sinal (apenas `g_last_signal` é usado).
 
 Testes e validação
-- [ ] Escrever scripts de teste simples em `tests/` cobrindo:
-  - Execução de um comando simples (ls, echo)
-  - Pipes: `ls | grep x | wc -l`
-  - Redirecionamentos: `echo hi > file` e `cat < file`
-  - Heredoc básico
-  - Variáveis e `$?` comportamento
-  - Builtins (cd, export, unset)
+- [x] Testes manuais básicos funcionando:
+  - [x] Execução de um comando simples (echo, ls, pwd funcionam)
+  - [x] Pipes: `echo test | cat`, `ls | wc -l` funcionam
+  - [x] Redirecionamentos: `echo hi > file`, `cat < file`, `echo x >> file` funcionam
+  - [x] Heredoc básico (implementado com arquivo temporário)
+  - [x] Variáveis `$VAR` e `$?` expandem corretamente
+  - [ ] Builtins cd, export, unset ainda não implementados completamente
 
 ## Exemplo de plano em sprints (curto prazo)
 - Sprint 1 (2 dias): ambiente, Makefile, prompt e readline, histórico.

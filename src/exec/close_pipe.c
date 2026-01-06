@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_char.c                                       :+:      :+:    :+:   */
+/*   close_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 20:26:45 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:51 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/12/15 10:33:25 by armeneze          #+#    #+#             */
+/*   Updated: 2026/01/02 15:51:09 by armeneze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
+#include "parser.h"
 #include "minishell.h"
 
-int	is_space_char(int c)
+void	close_all_pipes(t_cmd *cmd)
 {
-	if (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r')
-		return (1);
-	return (0);
+	while (cmd)
+	{
+		if (cmd->pipein > 2)
+			close(cmd->pipein);
+		if (cmd->pipeout > 2)
+			close(cmd->pipeout);
+		cmd = cmd->next;
+	}
 }

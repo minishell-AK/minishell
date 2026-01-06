@@ -1,0 +1,9 @@
+Mudanças Principais:
+Struct t_cmd - Adicionei campos pipein/pipeout para compatibilidade com executor
+Headers - Atualizado exec.h com definições de t_all_variables e protótipos do executor
+Lexer - Adicionado TOK_END sentinel para terminar token list corretamente
+Parser - Adaptado loop para parar em TOK_END em vez de NULL
+Main - Integrado fluxo: lexer → expand → parse → add_variables → exec_cmd
+Executor - Copiado sistema completo (fork, pipes, redirs, builtins) do branch_arthur
+Memory - Corrigido double-free removendo free(pids) duplicado em waint_all_pids
+Makefile - Configurado para compilar subdireto rios recursivamente

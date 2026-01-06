@@ -3,18 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/18 00:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/12/18 17:57:17 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/11/28 15:40:20 by armeneze          #+#    #+#             */
+/*   Updated: 2026/01/06 14:10:47 by armeneze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
+# include <limits.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 # include "parser.h"
+# include "minishell.h"
+# include "../libft/libft.h"
 
-void	exec_cmd(t_cmd *cmd);
+typedef struct s_all_variables
+{
+	char	**env;
+	char	**path;
+	int		*pids;
+	t_cmd	*cmd;
+}	t_all_variables;
+
+t_all_variables	*add_variables(t_cmd *cmd, char **env);
+void				exec_cmd(t_all_variables *all_variables);
+void				add_pipe(t_cmd **cmd);
+int				open_in(char *file);
+int				open_out(char *file);
+void				close_file(int fd);
+int				size_list_cmd(t_cmd *cmd);
+void				close_all_pipes(t_cmd *cmd);
+void				setup_child_io(t_cmd *cmd, t_cmd *head_list);
+int				get_fd(char *filename, int type);
+void				free_all_variables(t_all_variables *all_variables);
+char				*find_path(char *cmd, char **env);
+int				is_builtin(char *cmd);
+int				exec_builtin(t_cmd *cmd, char **env, t_all_variables *all);
+int				ft_echo(char **args);
+int				ft_pwd(char **args);
+int				ft_env(char **env, char **args);
+void				ft_exit(t_all_variables *all, char *line);
 
 #endif

@@ -3,7 +3,7 @@ CC = cc
 # Allow overriding CFLAGS from environment; default to empty (use -g when needed)
 CFLAGS = -Wall -Wextra -Werror
 SUPP_FILE = readline.supp
-SRCS = $(wildcard src/*.c)
+SRCS = $(shell find src -name '*.c')
 OBJ_DIR = objs
 OBJS = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
@@ -18,6 +18,7 @@ $(NAME): $(OBJS) $(LIBFT_A)
 	$(CC) $(CFLAGS) -I include -L $(LIBFT_DIR) -o $(NAME) $(OBJS) -lft -lreadline
 
 $(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I include -c $< -o $@
 
 $(OBJ_DIR):
