@@ -82,10 +82,10 @@ Execução
 
 Builtins (comportamento mínimo)
 - [x] `echo` com suporte a `-n` (apagar newline quando `-n`) — implementado em `src/exec/builtin/ft_echo.c`.
-- [ ] `cd` aceita apenas um caminho relativo ou absoluto (sem flags). Atualizar `PWD`/`OLDPWD` corretamente — esqueleto presente mas comentado em `src/exec/builtin/is_builtin.c`.
+- [x] `cd` com suporte a caminhos relativos/absolutos, `cd ~`, `cd` (HOME), `cd -` (OLDPWD). Atualiza `PWD`/`OLDPWD` corretamente — implementado em `src/exec/builtin/ft_cd.c`. **Executa no processo pai** para afetar o shell.
 - [x] `pwd` sem opções imprime diretório atual — implementado em `src/exec/builtin/ft_pwd.c`.
-- [ ] `export` sem opções: adicionar/atualizar variáveis de ambiente — esqueleto presente mas comentado em `src/exec/builtin/is_builtin.c`.
-- [ ] `unset` sem opções: remover variáveis de ambiente — esqueleto presente mas comentado em `src/exec/builtin/is_builtin.c`.
+- [x] `export` sem opções lista variáveis (formato `declare -x`), com argumentos adiciona/atualiza variáveis de ambiente. Validação de nomes (alfanumérico + underscore) — implementado em `src/exec/builtin/ft_export.c`. **Executa no processo pai** e modifica o ambiente global.
+- [x] `unset` sem opções não faz nada (retorna sucesso), com argumentos remove variáveis de ambiente. Validação de nomes (alfanumérico + underscore) — implementado em `src/exec/builtin/ft_unset.c`. **Executa no processo pai** e modifica o ambiente global.
 - [x] `env` sem argumentos imprime variáveis de ambiente — implementado em `src/exec/builtin/ft_env.c`.
 - [x] `exit` sem opções sai do shell com o código apropriado — implementado em `src/exec/builtin/ft_exit.c` (verifica se comando é exit e encerra).
 
@@ -108,7 +108,8 @@ Testes e validação
   - [x] Redirecionamentos: `echo hi > file`, `cat < file`, `echo x >> file` funcionam
   - [x] Heredoc básico (implementado com arquivo temporário)
   - [x] Variáveis `$VAR` e `$?` expandem corretamente
-  - [ ] Builtins cd, export, unset ainda não implementados completamente
+  - [x] Builtin `cd` completamente implementado (com ~, -, HOME, atualização de PWD/OLDPWD)
+  - [ ] Builtins export, unset ainda não implementados
 
 ## Exemplo de plano em sprints (curto prazo)
 - Sprint 1 (2 dias): ambiente, Makefile, prompt e readline, histórico.

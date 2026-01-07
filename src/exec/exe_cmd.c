@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:28:56 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 14:10:07 by armeneze         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:45:27 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,15 @@ void	exec_cmd(t_all_variables *all_variables)
 	int		i;
 
 	add_pipe(&all_variables->cmd);
+	/* Se é comando único (sem pipes) e é builtin do pai, executa no pai */
+	if (all_variables->cmd && !all_variables->cmd->next
+		&& all_variables->cmd->args && all_variables->cmd->args[0]
+		&& is_parent_builtin(all_variables->cmd->args[0]))
+	{
+		exec_builtin(all_variables->cmd, all_variables->env, all_variables);
+		free_all_variables(all_variables);
+		return ;
+	}
 	cuntent = all_variables->cmd;
 	i = 0;
 	while (cuntent != NULL)

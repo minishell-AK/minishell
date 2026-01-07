@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:42:48 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:12:50 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	process_line(char *line, char ***envp_ref)
 		token_free_all(tokens);
 		if (cmd)
 		{
-			all = add_variables(cmd, *envp_ref);
+			all = add_variables(cmd, envp_ref);
 			if (!all)
 			{
 				fprintf(stderr, "minishell: failed to prepare execution\n");

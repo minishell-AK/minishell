@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:40:20 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/06 14:10:47 by armeneze         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:40:30 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@
 typedef struct s_all_variables
 {
 	char	**env;
+	char	***envp_ref;
 	char	**path;
 	int		*pids;
 	t_cmd	*cmd;
 }	t_all_variables;
 
-t_all_variables	*add_variables(t_cmd *cmd, char **env);
+t_all_variables	*add_variables(t_cmd *cmd, char ***envp_ref);
 void				exec_cmd(t_all_variables *all_variables);
 void				add_pipe(t_cmd **cmd);
 int				open_in(char *file);
@@ -44,8 +45,12 @@ int				get_fd(char *filename, int type);
 void				free_all_variables(t_all_variables *all_variables);
 char				*find_path(char *cmd, char **env);
 int				is_builtin(char *cmd);
+int				is_parent_builtin(char *cmd);
 int				exec_builtin(t_cmd *cmd, char **env, t_all_variables *all);
 int				ft_echo(char **args);
+int				ft_cd(char **args, char ***envp_ref);
+int				ft_export(char **args, char ***envp_ref);
+int				ft_unset(char **args, char ***envp_ref);
 int				ft_pwd(char **args);
 int				ft_env(char **env, char **args);
 void				ft_exit(t_all_variables *all, char *line);

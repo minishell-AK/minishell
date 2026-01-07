@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 14:13:40 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/05 15:55:49 by armeneze         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:12:50 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**create_array_path(char **env)
 	return (array_env);
 }
 
-t_all_variables	*add_variables(t_cmd *cmd, char **env)
+t_all_variables	*add_variables(t_cmd *cmd, char ***envp_ref)
 {
 	t_all_variables	*vars;
 
@@ -79,13 +79,14 @@ t_all_variables	*add_variables(t_cmd *cmd, char **env)
 	if (!vars)
 		return (NULL);
 	vars->cmd = cmd;
-	vars->env = copy_env(env);
-	if (!vars->env && env)
+	vars->envp_ref = envp_ref;
+	vars->env = copy_env(*envp_ref);
+	if (!vars->env && *envp_ref)
 	{
 		free(vars);
 		return (NULL);
 	}
-	vars->path = create_array_path(env);
+	vars->path = create_array_path(*envp_ref);
 	vars->pids = (int *)malloc((size_list_cmd(cmd)) * sizeof(int));
 	return (vars);
 }
