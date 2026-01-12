@@ -3,27 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:28:56 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/07 15:45:27 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/08 18:19:11 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "parser.h"
 #include "minishell.h"
+#include <signal.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <termios.h>
 
-static void	waint_all_pids(int *pids, int size)
+static int	waint_all_pids(int *pids, int size)
 {
 	int	i;
+	int	status;
+	int	last_status;
 
 	i = 0;
+	last_status = 0;
 	while (i < size)
 	{
-		waitpid(pids[i], NULL, 0);
+		if (waitpid(pids[i], &status, 0) > 0)
+		{
+			if (WIFEXITED(status))
+				last_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				last_status = 128 + WTERMSIG(status);
+			else
+				last_status = 1;
+		}
 		i++;
 	}
+	return (last_status);
 }
 
 static void	exec_cmd_type(t_cmd *cuntent, char **env, t_all_variables *all)
@@ -53,7 +69,7 @@ static void	exec_cmd_type(t_cmd *cuntent, char **env, t_all_variables *all)
 	}
 }
 
-void	exec_cmd(t_all_variables *all_variables)
+int	exec_cmd(t_all_variables *all_variables)
 {
 	t_cmd	*cuntent;
 	int		i;
@@ -64,9 +80,9 @@ void	exec_cmd(t_all_variables *all_variables)
 		&& all_variables->cmd->args && all_variables->cmd->args[0]
 		&& is_parent_builtin(all_variables->cmd->args[0]))
 	{
-		exec_builtin(all_variables->cmd, all_variables->env, all_variables);
+		int code = exec_builtin(all_variables->cmd, all_variables->env, all_variables);
 		free_all_variables(all_variables);
-		return ;
+		return (code);
 	}
 	cuntent = all_variables->cmd;
 	i = 0;
@@ -75,13 +91,32 @@ void	exec_cmd(t_all_variables *all_variables)
 		all_variables->pids[i] = fork();
 		if (all_variables->pids[i] == 0)
 		{
+			/* Child: ensure it is in its own process group initially and uses default signals */
+			setpgid(0, 0);
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			setup_child_io(cuntent, all_variables->cmd);
 			exec_cmd_type(cuntent, all_variables->env, all_variables);
+		}
+		else if (all_variables->pids[i] > 0)
+		{
+			/* Parent: arrange process groups so the pipeline shares a pgid */
+			if (i == 0)
+				setpgid(all_variables->pids[i], all_variables->pids[i]);
+			else
+				setpgid(all_variables->pids[i], all_variables->pids[0]);
 		}
 		cuntent = cuntent->next;
 		i++;
 	}
 	close_all_pipes(all_variables->cmd);
-	waint_all_pids(all_variables->pids, size_list_cmd(all_variables->cmd));
+	/* Put the child pipeline in foreground */
+	if (isatty(STDIN_FILENO) && size_list_cmd(all_variables->cmd) > 0 && all_variables->pids[0] > 0)
+		tcsetpgrp(STDIN_FILENO, all_variables->pids[0]);
+	int last_status = waint_all_pids(all_variables->pids, size_list_cmd(all_variables->cmd));
+	/* Restore shell as foreground process group */
+	if (isatty(STDIN_FILENO))
+		tcsetpgrp(STDIN_FILENO, getpgrp());
 	free_all_variables(all_variables);
+	return (last_status);
 }

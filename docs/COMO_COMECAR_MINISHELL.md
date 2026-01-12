@@ -109,7 +109,7 @@ Testes e validação
   - [x] Heredoc básico (implementado com arquivo temporário)
   - [x] Variáveis `$VAR` e `$?` expandem corretamente
   - [x] Builtin `cd` completamente implementado (com ~, -, HOME, atualização de PWD/OLDPWD)
-  - [ ] Builtins export, unset ainda não implementados
+  - [x] Builtins `export` e `unset` implementados (ver `src/exec/builtin/ft_export.c`, `src/exec/builtin/ft_unset.c`)
 
 ## Exemplo de plano em sprints (curto prazo)
 - Sprint 1 (2 dias): ambiente, Makefile, prompt e readline, histórico.

@@ -1,3 +1,0 @@
-minishell$ echo one; echo two\ three
-minishell$ exit
-minishell$ 

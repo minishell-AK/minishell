@@ -1,0 +1,16 @@
+pwd
+echo hello
+cat > tmpfile <<EOF
+line1
+line2
+EOF
+cat tmpfile
+rm tmpfile
+echo done
+export X=1
+env | grep X
+unset X
+env | grep X || echo unset_ok
+ls nonexistent || echo ls_failed
+echo pipe test | tr a-z A-Z
+exit

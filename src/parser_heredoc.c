@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 23:50:37 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:13 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/08 18:51:33 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static char	*read_heredoc_lines(const char *delimiter, int expand,
 	if (res == -1)
 	{
 		close(fd);
+		unlink(template);
 		return (NULL);
 	}
 	close(fd);

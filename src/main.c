@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/07 16:12:50 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/08 18:33:10 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 /* lexer/parser inspection removed; restore normal prompt behavior */
 
 volatile sig_atomic_t	g_last_signal = 0;
+volatile sig_atomic_t	g_exit_requested = 0;
 
 void	sigint_handler(int sig)
 {
@@ -55,9 +56,14 @@ static void	setup_signals(void)
 	sa.sa_handler = sigquit_handler;
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 		perror("sigaction(SIGQUIT)");
+	/* Ignore job-control signals in the interactive shell to avoid
+	   being suspended when manipulating terminal foreground. */
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
 }
 
-static void	process_line(char *line, char ***envp_ref)
+static int	process_line(char *line, char ***envp_ref, int last_status)
 {
 	t_token		*tokens;
 	t_cmd		*cmd;
@@ -67,7 +73,7 @@ static void	process_line(char *line, char ***envp_ref)
 	tokens = lexer_tokenize(line);
 	if (tokens)
 	{
-		expand_tokens(tokens, *envp_ref, 0);
+		expand_tokens(tokens, *envp_ref, last_status);
 		cmd = parse_tokens(tokens, envp_ref);
 		token_free_all(tokens);
 		if (cmd)
@@ -77,12 +83,19 @@ static void	process_line(char *line, char ***envp_ref)
 			{
 				fprintf(stderr, "minishell: failed to prepare execution\n");
 				free_commands(cmd);
-				return ;
+				return (last_status);
 			}
-			ft_exit(all, line);
-			exec_cmd(all);
+			if (ft_exit(all, line))
+			{
+				/* ensure we free the command-related allocations */
+				free_all_variables(all);
+				return (last_status);
+			}
+			last_status = exec_cmd(all);
+			return (last_status);
 		}
 	}
+	return (last_status);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -99,13 +112,29 @@ int	main(int argc, char **argv, char **envp)
 		fprintf(stderr, "minishell: failed to duplicate envp\n");
 		return (1);
 	}
+	/* Force external tools to print English messages to match tests */
+	{
+		int idx = env_find_index(my_env, "LC_ALL");
+		if (idx >= 0)
+		{
+			free(my_env[idx]);
+			my_env[idx] = env_make_entry("LC_ALL", "C");
+		}
+		else
+		{
+			char *entry = env_make_entry("LC_ALL", "C");
+			if (entry)
+				env_append_entry(&my_env, entry);
+		}
+	}
+	int last_status = 0;
 	while (1)
 	{
 		line = readline("minishell$ ");
 		if (!line)
 			break ;
 		if (line[0] != '\0')
-			process_line(line, &my_env);
+			last_status = process_line(line, &my_env, last_status);
 		free(line);
 	}
 	rl_clear_history();

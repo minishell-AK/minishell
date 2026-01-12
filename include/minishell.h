@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:41:39 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/08 18:33:10 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 /* Global flag set by the signal handler. */
 extern volatile sig_atomic_t	g_last_signal;
+extern volatile sig_atomic_t	g_exit_requested;
 
 /* utilities provided by the parser/runtime */
 char	**dup_envp(char **envp);

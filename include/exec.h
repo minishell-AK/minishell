@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:40:20 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/07 16:40:30 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/08 18:33:10 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_all_variables
 }	t_all_variables;
 
 t_all_variables	*add_variables(t_cmd *cmd, char ***envp_ref);
-void				exec_cmd(t_all_variables *all_variables);
+int				exec_cmd(t_all_variables *all_variables);
 void				add_pipe(t_cmd **cmd);
 int				open_in(char *file);
 int				open_out(char *file);
@@ -52,7 +52,7 @@ int				ft_cd(char **args, char ***envp_ref);
 int				ft_export(char **args, char ***envp_ref);
 int				ft_unset(char **args, char ***envp_ref);
 int				ft_pwd(char **args);
-int				ft_env(char **env, char **args);
-void				ft_exit(t_all_variables *all, char *line);
+int			ft_env(char **env, char **args);
+int			ft_exit(t_all_variables *all, char *line);
 
 #endif

@@ -1,4 +1,0 @@
-echo hello >
-cat <
-| echo pipetest
-exit

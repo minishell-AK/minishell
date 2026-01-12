@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_alloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 20:26:57 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:47 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/08 17:45:44 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,10 @@ void	free_envp(char **envp)
 
 void	*xrealloc(void *ptr, size_t new_size)
 {
-	void	*nptr;
+	void    *nptr;
 
 	if (!ptr)
 		return (malloc(new_size));
-	nptr = malloc(new_size);
-	if (!nptr)
-		return (NULL);
-	memcpy(nptr, ptr, new_size);
-	free(ptr);
+	nptr = realloc(ptr, new_size);
 	return (nptr);
 }

@@ -1,4 +1,0 @@
-minishell$ echo "unterminated
-minishell$ echo 'still
-minishell$ exit
-minishell$ 

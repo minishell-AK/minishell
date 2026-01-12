@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 00:39:26 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:07 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/08 18:51:33 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,18 @@ char	*read_trimmed_line(void)
 	size_t	len;
 
 	if (isatty(STDIN_FILENO))
-		return (readline("heredoc> "));
+	{
+		line = readline("heredoc> ");
+		/* If a SIGINT happened, treat as abort (propagate NULL) */
+		if (g_last_signal == SIGINT)
+		{
+			g_last_signal = 0;
+			if (line)
+				free(line);
+			return (NULL);
+		}
+		return (line);
+	}
 	line = get_next_line(STDIN_FILENO);
 	if (line)
 	{
@@ -78,7 +89,15 @@ int	heredoc_read_loop(int fd, t_hdoc_ctx *ctx)
 	{
 		line = read_trimmed_line();
 		if (!line)
+		{
+			/* If readline returned NULL due to SIGINT, propagate abort */
+			if (g_last_signal == SIGINT)
+			{
+				g_last_signal = 0;
+				return (-1);
+			}
 			break ;
+		}
 		res = process_heredoc_line_ctx(fd, line, ctx);
 		if (res == 1)
 			return (1);

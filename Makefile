@@ -1,7 +1,7 @@
 NAME = minishell
 CC = cc
 # Allow overriding CFLAGS from environment; default to empty (use -g when needed)
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fPIE
 SUPP_FILE = readline.supp
 SRCS = $(shell find src -name '*.c')
 OBJ_DIR = objs
@@ -15,7 +15,7 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_A)
-	$(CC) $(CFLAGS) -I include -L $(LIBFT_DIR) -o $(NAME) $(OBJS) -lft -lreadline
+	$(CC) $(CFLAGS) -pie -I include -L $(LIBFT_DIR) -o $(NAME) $(OBJS) -lft -lreadline
 
 $(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
