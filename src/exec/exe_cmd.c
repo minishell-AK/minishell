@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:28:56 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/08 18:19:11 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/13 20:21:00 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ static int	waint_all_pids(int *pids, int size)
 	int	i;
 	int	status;
 	int	last_status;
+	int	seen_sigint;
 
 	i = 0;
 	last_status = 0;
+	seen_sigint = 0;
 	while (i < size)
 	{
 		if (waitpid(pids[i], &status, 0) > 0)
@@ -33,12 +35,18 @@ static int	waint_all_pids(int *pids, int size)
 			if (WIFEXITED(status))
 				last_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
+			{
 				last_status = 128 + WTERMSIG(status);
+				if (WTERMSIG(status) == SIGINT)
+					seen_sigint = 1;
+			}
 			else
 				last_status = 1;
 		}
 		i++;
 	}
+	if (seen_sigint && isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "\n", 1);
 	return (last_status);
 }
 
@@ -91,7 +99,6 @@ int	exec_cmd(t_all_variables *all_variables)
 		all_variables->pids[i] = fork();
 		if (all_variables->pids[i] == 0)
 		{
-			/* Child: ensure it is in its own process group initially and uses default signals */
 			setpgid(0, 0);
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
@@ -100,7 +107,6 @@ int	exec_cmd(t_all_variables *all_variables)
 		}
 		else if (all_variables->pids[i] > 0)
 		{
-			/* Parent: arrange process groups so the pipeline shares a pgid */
 			if (i == 0)
 				setpgid(all_variables->pids[i], all_variables->pids[i]);
 			else
@@ -110,11 +116,9 @@ int	exec_cmd(t_all_variables *all_variables)
 		i++;
 	}
 	close_all_pipes(all_variables->cmd);
-	/* Put the child pipeline in foreground */
 	if (isatty(STDIN_FILENO) && size_list_cmd(all_variables->cmd) > 0 && all_variables->pids[0] > 0)
 		tcsetpgrp(STDIN_FILENO, all_variables->pids[0]);
 	int last_status = waint_all_pids(all_variables->pids, size_list_cmd(all_variables->cmd));
-	/* Restore shell as foreground process group */
 	if (isatty(STDIN_FILENO))
 		tcsetpgrp(STDIN_FILENO, getpgrp());
 	free_all_variables(all_variables);

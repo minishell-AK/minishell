@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/08 18:33:10 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/13 21:35:46 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ void	sigint_handler(int sig)
 	(void)sig;
 	g_last_signal = sig;
 	write(1, "\n", 1);
-	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redisplay();
+	rl_on_new_line();
 }
 
 void	sigquit_handler(int sig)
@@ -78,6 +77,8 @@ static int	process_line(char *line, char ***envp_ref, int last_status)
 		token_free_all(tokens);
 		if (cmd)
 		{
+			int exit_status;
+
 			all = add_variables(cmd, envp_ref);
 			if (!all)
 			{
@@ -85,11 +86,11 @@ static int	process_line(char *line, char ***envp_ref, int last_status)
 				free_commands(cmd);
 				return (last_status);
 			}
-			if (ft_exit(all, line))
+			exit_status = ft_exit(all, line, last_status);
+			if (exit_status >= 0)
 			{
-				/* ensure we free the command-related allocations */
 				free_all_variables(all);
-				return (last_status);
+				return (exit_status);
 			}
 			last_status = exec_cmd(all);
 			return (last_status);
@@ -109,8 +110,13 @@ int	main(int argc, char **argv, char **envp)
 	my_env = dup_envp(envp);
 	if (!my_env)
 	{
-		fprintf(stderr, "minishell: failed to duplicate envp\n");
-		return (1);
+		my_env = malloc(sizeof(char *));
+		if (!my_env)
+		{
+			fprintf(stderr, "minishell: failed to allocate env\n");
+			return (1);
+		}
+		my_env[0] = NULL;
 	}
 	/* Force external tools to print English messages to match tests */
 	{
@@ -130,14 +136,17 @@ int	main(int argc, char **argv, char **envp)
 	int last_status = 0;
 	while (1)
 	{
+		g_last_signal = 0;
 		line = readline("minishell$ ");
 		if (!line)
 			break ;
 		if (line[0] != '\0')
 			last_status = process_line(line, &my_env, last_status);
 		free(line);
+		if (g_exit_requested)
+			break ;
 	}
 	rl_clear_history();
 	free_envp(my_env);
-	return (0);
+	return (last_status);
 }

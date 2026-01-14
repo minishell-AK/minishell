@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_child.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 10:19:16 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/05 12:00:48 by armeneze         ###   ########.fr       */
+/*   Updated: 2026/01/13 19:44:41 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ void	setup_child_io(t_cmd *cmd, t_cmd *head_list)
 			fd_in = get_fd(redir->file, redir->type);
 			if (fd_in == -1)
 				exit(1);
+		}
+		else if (redir->type == HEREDOC)
+		{
+			if (fd_in > STDERR_FILENO)
+				close(fd_in);
+			fd_in = open(redir->file, O_RDONLY);
+			if (fd_in == -1)
+			{
+				perror(redir->file);
+				exit(1);
+			}
+			unlink(redir->file);
 		}
 		else if (redir->type == REDIR_OUT || redir->type == APPEND)
 		{

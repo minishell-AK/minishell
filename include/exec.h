@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:40:20 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/08 18:33:10 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/13 20:21:00 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int				ft_export(char **args, char ***envp_ref);
 int				ft_unset(char **args, char ***envp_ref);
 int				ft_pwd(char **args);
 int			ft_env(char **env, char **args);
-int			ft_exit(t_all_variables *all, char *line);
+int			ft_exit(t_all_variables *all, char *line, int last_status);
 
 #endif
