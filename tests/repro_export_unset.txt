@@ -1,4 +1,0 @@
-export CCC=3
-echo $CCC
-unset CCC
-exit

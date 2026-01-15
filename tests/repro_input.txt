@@ -1,7 +1,0 @@
-cat <<EOF
-hello
-EOF
-export AAA=1
-echo $AAA
-unset AAA
-exit

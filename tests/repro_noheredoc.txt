@@ -1,5 +1,0 @@
-echo hi
-export EEE=5
-echo $EEE
-unset EEE
-exit
