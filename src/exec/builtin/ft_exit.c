@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 13:44:07 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/14 22:21:34 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/15 15:46:41 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static int	get_exit_status(char **args, int last_status)
 		return (last_status);
 	if (!is_numeric(args[1]))
 	{
-		fprintf(stderr, "minishell: exit: %s: numeric argument required\n", args[1]);
+		fprintf(stderr,
+			"minishell: exit: %s: numeric argument required\n",
+			args[1]);
 		return (255);
 	}
 	if (args[2])
@@ -51,7 +53,6 @@ static int	get_exit_status(char **args, int last_status)
 		return (-1);
 	}
 	code = ft_atoi(args[1]);
-	/* match bash truncation to unsigned char */
 	return ((int)(unsigned char)code);
 }
 

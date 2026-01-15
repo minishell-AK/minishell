@@ -1,0 +1,74 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export_print.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   Created: 2026/01/15 18:00:00 by copilot           #+#    #+#             */
+/*   Updated: 2026/01/15 18:00:00 by copilot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_export.h"
+#include "../../../libft/libft.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+static void	sort_env_array(char **arr, int count)
+{
+    int i;
+    int j;
+    char *tmp;
+
+    i = -1;
+    while (++i < count - 1)
+    {
+        j = i;
+        while (++j < count)
+        {
+            if (ft_strncmp(arr[i], arr[j], ft_strlen(arr[i])) > 0)
+            {
+                tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+            }
+        }
+    }
+}
+
+static char **duplicate_and_sort_env(char **envp)
+{
+    int count;
+    char **sorted;
+    int i;
+
+    count = count_size_array_char(envp);
+    sorted = malloc(sizeof(char *) * (count + 1));
+    if (!sorted)
+        return (NULL);
+    i = -1;
+    while (++i < count)
+        sorted[i] = envp[i];
+    sorted[count] = NULL;
+    sort_env_array(sorted, count);
+    return (sorted);
+}
+
+static void	print_env_array(char **arr)
+{
+    int i;
+
+    i = -1;
+    while (arr[++i])
+        printf("declare -x %s\n", arr[i]);
+}
+
+void	print_sorted_env(char **envp)
+{
+    char **sorted;
+
+    sorted = duplicate_and_sort_env(envp);
+    if (!sorted)
+        return ;
+    print_env_array(sorted);
+    free(sorted);
+}

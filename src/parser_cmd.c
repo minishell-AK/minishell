@@ -6,18 +6,19 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/15 16:27:23 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "parser_cmd_helpers.h"
 #include "../libft/libft.h"
 #include "minishell.h"
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-static int	reject_multiple_out_redirs(t_cmd *cmd);
+/* helper implementations moved to src/parser_cmd_helpers.c */
 
 t_cmd	*cmd_new(void)
 {
@@ -34,12 +35,6 @@ t_cmd	*cmd_new(void)
 	return (c);
 }
 
-static char	**copy_old_args(char **newargv, char **oldargs, size_t cnt)
-{
-	memcpy(newargv, oldargs, sizeof(char *) * cnt);
-	free(oldargs);
-	return (newargv);
-}
 
 int	add_arg(t_cmd *cmd, const char *arg)
 {
@@ -71,7 +66,6 @@ int	add_redir(t_cmd *cmd, t_redir_type type, const char *target)
 
 	if (!cmd || !target)
 		return (-1);
-	/* Reject multiple output redirections for the same command */
 	if (type == REDIR_OUT || type == APPEND)
 	{
 		if (reject_multiple_out_redirs(cmd) == -1)
@@ -87,23 +81,7 @@ int	add_redir(t_cmd *cmd, t_redir_type type, const char *target)
 	return (0);
 }
 
-static int	reject_multiple_out_redirs(t_cmd *cmd)
-{
-	t_redir *it;
-
-	it = cmd->redirs;
-	while (it)
-	{
-		if (it->type == REDIR_OUT || it->type == APPEND)
-		{
-			ft_putstr_fd("minishell: syntax error: multiple output redirections\n", STDOUT_FILENO);
-			ft_putstr_fd("minishell: syntax error: multiple output redirections\n", 2);
-			return (-1);
-		}
-		it = it->next;
-	}
-	return (0);
-}
+/* helper implementations moved to src/parser_cmd_helpers.c */
 
 t_cmd	*ensure_cmd(t_cmd **head, t_cmd **cur)
 {

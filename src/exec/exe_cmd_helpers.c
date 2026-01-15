@@ -1,0 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exe_cmd_helpers.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: copilot <copilot@example.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/15 12:00:00 by copilot           #+#    #+#             */
+/*   Updated: 2026/01/15 12:00:00 by copilot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "exec.h"
+#include "minishell.h"
+#include <signal.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+/* spawn and child helpers moved to src/exec/exe_cmd_spawn.c */
+
+int	waint_all_pids(int *pids, int size)
+{
+    int i;
+    int status;
+    int last_status;
+    int seen_sigint;
+
+    i = 0;
+    last_status = 0;
+    seen_sigint = 0;
+    while (i < size)
+    {
+        if (waitpid(pids[i], &status, 0) > 0)
+            handle_wait_status(status, &last_status, &seen_sigint);
+        i++;
+    }
+    if (seen_sigint && isatty(STDIN_FILENO))
+        write(STDOUT_FILENO, "\n", 1);
+    return (last_status);
+}
+
+void	report_cmd_not_found_and_exit(char *name, t_all_variables *all)
+{
+    ft_putstr_fd(name, STDERR_FILENO);
+    ft_putstr_fd(": command not found\n", STDERR_FILENO);
+    if (all)
+        free_all_variables(all);
+    exit(127);
+}

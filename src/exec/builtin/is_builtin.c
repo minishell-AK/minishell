@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   is_builtin.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 15:44:50 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/07 16:40:30 by kakubo-l         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "exec.h"
 
 int	is_builtin(char *cmd)
@@ -63,7 +51,6 @@ int	exec_builtin(t_cmd *cmd, char **env, t_all_variables *all)
 		return (ft_export(cmd->args, all->envp_ref));
 	if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
 		return (ft_unset(cmd->args, all->envp_ref));
-	// if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
-	// 	return (ft_exit(*env));
+	return (0);
 	return (0);
 }

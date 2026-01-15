@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser_heredoc_utils.c                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/20 00:39:26 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parser.h"
 #include "../libft/libft.h"
 #include "minishell.h"
@@ -22,10 +10,7 @@
 #include <errno.h>
 #include <readline/readline.h>
 
-/* build_tmp_name and try_create_tmp moved to parser_heredoc_tmp.c */
-
-static int	make_tmpfile_loop(char *name, pid_t pid, int *seq,
-				char *out, size_t out_sz);
+static int	make_tmpfile_loop(pid_t pid, int *seq, char *out, size_t out_sz);
 
 char	*read_trimmed_line(void)
 {
@@ -50,7 +35,6 @@ char	*read_trimmed_line(void)
 // Create project tmp dir if missing and open a unique tmp file
 int	open_unique_tmpfile(char *out, size_t out_sz)
 {
-	char		name[128];
 	pid_t		pid;
 	static int	seq;
 
@@ -60,13 +44,13 @@ int	open_unique_tmpfile(char *out, size_t out_sz)
 	seq++;
 	if (seq <= 0)
 		seq = 1;
-	return (make_tmpfile_loop(name, pid, &seq, out, out_sz));
+	return (make_tmpfile_loop(pid, &seq, out, out_sz));
 }
 
-static int	make_tmpfile_loop(char *name, pid_t pid, int *seq,
-				char *out, size_t out_sz)
+static int	make_tmpfile_loop(pid_t pid, int *seq, char *out, size_t out_sz)
 {
-	int fd;
+	int     fd;
+	char    name[128];
 
 	while (*seq < 100000)
 	{
@@ -92,7 +76,6 @@ int	heredoc_read_loop(int fd, t_hdoc_ctx *ctx)
 		line = read_trimmed_line();
 		if (!line)
 		{
-			/* readline returned NULL (EOF or error) */
 			break ;
 		}
 		res = process_heredoc_line_ctx(fd, line, ctx);

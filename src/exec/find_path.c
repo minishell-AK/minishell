@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 11:52:19 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/15 00:32:22 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/15 15:01:08 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static void	free_matrix(char **matrix)
 	free(matrix);
 }
 
-static char *check_path_access(char *dir, char *cmd)
+static char	*check_path_access(char *dir, char *cmd)
 {
-	char    *slash_path;
-	char    *full_path;
+	char	*slash_path;
+	char	*full_path;
 
 	slash_path = ft_strjoin(dir, "/");
 	if (!slash_path)
@@ -46,6 +46,18 @@ static char *check_path_access(char *dir, char *cmd)
 	return (NULL);
 }
 
+static char	**get_paths_from_env(char **env)
+{
+	int		i;
+
+	i = 0;
+	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
+		i++;
+	if (!env[i])
+		return (NULL);
+	return (ft_split(env[i] + 5, ':'));
+}
+
 char	*find_path(char *cmd, char **env)
 {
 	char	**paths;
@@ -58,12 +70,7 @@ char	*find_path(char *cmd, char **env)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
-	i = 0;
-	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
-		i++;
-	if (!env[i])
-		return (NULL);
-	paths = ft_split(env[i] + 5, ':');
+	paths = get_paths_from_env(env);
 	i = 0;
 	while (paths[i])
 	{

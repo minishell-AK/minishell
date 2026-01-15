@@ -6,15 +6,14 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 18:40:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/15 15:46:41 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
 
-static void	init_word_ctx(t_word_ctx *ctx, const char *line, size_t len,
-				t_seg **segs, t_seg **last);
+/* init_word_ctx removed; initialize inline in collect_word */
 
 static int	should_break(const char *line, size_t i)
 {
@@ -43,7 +42,10 @@ int	collect_word(const char *line, size_t *i, size_t len, t_token **head)
 
 	segs = NULL;
 	last = NULL;
-	init_word_ctx(&ctx, line, len, &segs, &last);
+	ctx.line = line;
+	ctx.len = len;
+	ctx.segs = &segs;
+	ctx.last = &last;
 	while (*i < len)
 	{
 		if (line[*i] == '\'' || line[*i] == '"')
@@ -60,11 +62,4 @@ int	collect_word(const char *line, size_t *i, size_t len, t_token **head)
 	return (finalize_token(segs, head));
 }
 
-static void	init_word_ctx(t_word_ctx *ctx, const char *line, size_t len,
-				t_seg **segs, t_seg **last)
-{
-	ctx->line = line;
-	ctx->len = len;
-	ctx->segs = segs;
-	ctx->last = last;
-}
+/* init_word_ctx removed */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:40:20 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/13 20:21:00 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:23:31 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ typedef struct s_all_variables
 }	t_all_variables;
 
 t_all_variables	*add_variables(t_cmd *cmd, char ***envp_ref);
-int				exec_cmd(t_all_variables *all_variables);
+int			waint_all_pids(int *pids, int size);
+int			spawn_children(t_all_variables *all_variables);
+void			report_cmd_not_found_and_exit(char *name, t_all_variables *all);
+void			handle_wait_status(int status, int *last_status, int *seen_sigint);
+int			exec_cmd(t_all_variables *all_variables);
 void				add_pipe(t_cmd **cmd);
 int				open_in(char *file);
 int				open_out(char *file);

@@ -2,22 +2,12 @@
 #include <stdlib.h>
 #include <readline/history.h>
 
-/*
- * Small cleanup registry: allow registering the `char **` envp pointer
- * so that we can guarantee it gets freed on normal process exit.
- *
- * Rules:
- * - call `register_envp_ref(&my_env)` in `main` after `dup_envp`
- * - call `unregister_envp_ref()` if you manually free the env before exit
- */
-
 static char ***g_envp_ref = NULL;
 static int g_atexit_registered = 0;
 
 static void
 g_registered_cleanup(void)
 {
-    /* clear readline history (free history entries allocated by add_history) */
     clear_history();
     if (g_envp_ref && *g_envp_ref)
     {
@@ -45,15 +35,12 @@ void	unregister_envp_ref(void)
 
 void	cleanup_and_exit(int status)
 {
-    /* Free registered envp immediately and avoid double-free in atexit */
     if (g_envp_ref && *g_envp_ref)
     {
         free_envp(*g_envp_ref);
         *g_envp_ref = NULL;
     }
-    /* free readline history before exiting the parent process */
     clear_history();
-    /* unregister so atexit handler does nothing */
     g_envp_ref = NULL;
     exit(status);
 }
