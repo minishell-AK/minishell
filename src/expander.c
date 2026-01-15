@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 21:53:24 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/12/20 03:42:43 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/14 19:33:34 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,35 @@ static int	expand_dollar(t_exp *ctx, const char *s, size_t *i)
 {
 	if (s[*i + 1] == '?')
 		return (expand_status(ctx, i));
+	if (s[*i + 1] == '{')
+	{
+		size_t	j;
+		size_t	namelen;
+		char	*name;
+		char	*val;
+
+		j = *i + 2;
+		while (s[j] && (ft_isalnum((unsigned char)s[j]) || s[j] == '_'))
+			j++;
+		if (s[j] == '}')
+		{
+			namelen = j - (*i + 2);
+			name = malloc(namelen + 1);
+			if (!name)
+				return (0);
+			memcpy(name, s + *i + 2, namelen);
+			name[namelen] = '\0';
+			val = get_env_value(ctx->envp, name);
+			if (!val)
+				val = "";
+			free(name);
+			if (!expand_buf(ctx, val))
+				return (0);
+			*i = j + 1;
+			return (1);
+		}
+		/* no closing brace: fall through to treat '$' as literal */
+	}
 	if (ft_isalpha((unsigned char)s[*i + 1]) || s[*i + 1] == '_')
 		return (expand_var(ctx, s, i));
 	if (!expand_char(ctx))

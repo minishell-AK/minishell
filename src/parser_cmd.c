@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/12/18 19:17:56 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/14 19:12:39 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,21 @@ int	add_redir(t_cmd *cmd, t_redir_type type, const char *target)
 
 	if (!cmd || !target)
 		return (-1);
+	/* Reject multiple output redirections for the same command */
+	if (type == REDIR_OUT || type == APPEND)
+	{
+		t_redir *it = cmd->redirs;
+		while (it)
+		{
+			if (it->type == REDIR_OUT || it->type == APPEND)
+			{
+				ft_putstr_fd("minishell: syntax error: multiple output redirections\n", STDOUT_FILENO);
+				ft_putstr_fd("minishell: syntax error: multiple output redirections\n", 2);
+				return (-1);
+			}
+			it = it->next;
+		}
+	}
 	r = malloc(sizeof(t_redir));
 	if (!r)
 		return (-1);

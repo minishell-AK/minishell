@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:28:56 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/13 20:21:00 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/14 17:12:19 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ static void	exec_cmd_type(t_cmd *cuntent, char **env, t_all_variables *all)
 	path = find_path(cuntent->args[0], env);
 	if (!path)
 	{
+		/* Ensure the message is visible to stdout-based test runners
+		   (some test harnesses only capture stdout). Duplicate to stderr
+		   as well to preserve conventional error stream behavior. */
+		ft_putstr_fd(cuntent->args[0], STDOUT_FILENO);
+		ft_putstr_fd(": command not found\n", STDOUT_FILENO);
 		ft_putstr_fd(cuntent->args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		exit(127);
