@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/14 21:18:47 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/14 22:21:34 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,20 @@
 /* lexer/parser inspection removed; restore normal prompt behavior */
 
 volatile sig_atomic_t	g_last_signal = 0;
-volatile sig_atomic_t	g_exit_requested = 0;
+static volatile sig_atomic_t	g_exit_requested = 0;
+
+/* Accessors for exit request flag. Make the flag static to avoid
+   exposing additional globals; other translation units should call
+   `set_exit_requested()` to request exit. */
+void	set_exit_requested(void)
+{
+	g_exit_requested = 1;
+}
+
+int	get_exit_requested(void)
+{
+	return ((int)g_exit_requested);
+}
 
 void	sigint_handler(int sig)
 {
@@ -163,7 +176,7 @@ int	main(int argc, char **argv, char **envp)
 			last_status = process_line(line, &my_env, last_status);
 		/* If an `exit` was requested by a builtin, terminate with that status immediately.
 		   This ensures non-interactive runs (e.g. `shell < file`) return the requested code. */
-		if (g_exit_requested)
+		if (get_exit_requested())
 		{
 			free(line);
 			rl_clear_history();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 13:44:07 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/13 20:21:00 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/14 22:21:34 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_exit(t_all_variables *all, char *line, int last_status)
 			status = get_exit_status(cmd->args, last_status);
 			if (status == -1)
 				return (-1);
-			g_exit_requested = 1;
+			set_exit_requested();
 			return (status);
 		}
 		cmd = cmd->next;

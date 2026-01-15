@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/08 18:33:10 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/14 22:21:34 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@
 
 /* Global flag set by the signal handler. */
 extern volatile sig_atomic_t	g_last_signal;
-extern volatile sig_atomic_t	g_exit_requested;
+
+/* Exit request accessor: prefer functions over a second global variable.
+	Use `set_exit_requested()` from other translation units and
+	`get_exit_requested()` where needed. */
+void	set_exit_requested(void);
+int	get_exit_requested(void);
 
 /* utilities provided by the parser/runtime */
 char	**dup_envp(char **envp);
