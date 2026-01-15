@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd_spawn.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: copilot <copilot@ai>               +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 16:20:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/01/15 16:20:00 by copilot          ###   ########.fr       */
+/*   Created: 2026/01/15 19:54:30 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 19:54:35 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "exec.h"
 #include "minishell.h"

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_flags.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   Created: 2026/01/15 18:20:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/01/15 18:20:00 by copilot          ###   ########.fr       */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/15 19:58:01 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 19:58:02 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "lexer.h"
 #include "lexer_word_finalize_helpers.h"

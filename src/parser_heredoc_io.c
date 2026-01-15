@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_io.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   Created: 2026/01/15 18:50:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/01/15 18:50:00 by copilot          ###   ########.fr       */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/15 20:00:12 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 20:00:13 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "parser.h"
 #include "parser_heredoc_helpers.h"

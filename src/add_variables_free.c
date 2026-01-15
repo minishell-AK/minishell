@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   add_variables_free.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   Created: 2026/01/15 18:10:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/01/15 18:10:00 by copilot          ###   ########.fr       */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/15 19:55:10 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 19:55:11 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "add_variables.h"
 #include <stdlib.h>

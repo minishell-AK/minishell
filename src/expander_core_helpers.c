@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander_core_helpers.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   Created: 2026/01/15 13:41:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/01/15 13:41:00 by copilot          ###   ########.fr       */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/15 19:56:58 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 19:56:59 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "expander_core.h"
 #include "lexer.h"

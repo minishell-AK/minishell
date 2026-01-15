@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   add_variables_copy.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   Created: 2026/01/15 18:00:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/01/15 18:00:00 by copilot          ###   ########.fr       */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/15 19:55:03 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 19:55:04 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "add_variables.h"
 #include "../libft/libft.h"

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_finalize_helpers.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: copilot <copilot@ai>               +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 16:00:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/01/15 16:00:00 by copilot          ###   ########.fr       */
+/*   Created: 2026/01/15 19:57:46 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 19:57:47 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "lexer.h"
 #include "lexer_word_finalize_helpers.h"

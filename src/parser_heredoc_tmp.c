@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_tmp.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/20 01:20:00 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:03 by kakubo-l         ###   ########.fr       */
+/*   Created: 2026/01/15 20:00:31 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 20:00:32 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "parser.h"
 #include "../libft/libft.h"

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/20 04:30:00 by gitcopilot        #+#    #+#             */
-/*   Updated: 2026/01/06 18:42:10 by kakubo-l         ###   ########.fr       */
+/*   Created: 2026/01/15 19:56:45 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 19:56:46 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include <stdlib.h>
 #include "../libft/libft.h"

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/18 18:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:42:14 by kakubo-l         ###   ########.fr       */
+/*   Created: 2026/01/15 19:57:12 by kyoshi            #+#    #+#             */
+/*   Updated: 2026/01/15 19:57:13 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "lexer.h"
 #include "../libft/libft.h"
