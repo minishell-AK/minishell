@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_finalize_helpers.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: copilot <copilot@ai>                        +#+  +:+       +#+        */
+/*   By: copilot <copilot@ai>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 16:00:00 by copilot           #+#    #+#             */
 /*   Updated: 2026/01/15 16:00:00 by copilot          ###   ########.fr       */

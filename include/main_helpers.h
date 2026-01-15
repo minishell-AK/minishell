@@ -14,13 +14,15 @@
 # include "minishell.h"
 # include "exec.h"
 
-int	process_line(char *line, char ***envp_ref, int last_status);
-t_all_variables	*prepare_execution(char *line, char ***envp_ref, int last_status);
-void	set_locale_c(char ***my_env_ref);
-void	setup_terminal_pgrp(void);
-int	run_shell_loop(char ***my_env_ref);
-void	set_exit_requested(void);
-int	get_exit_requested(void);
-void	setup_signals(void);
+int process_line(char *line, char ***envp_ref, int last_status);
+t_all_variables	*prepare_execution(char *line,
+				char ***envp_ref,
+				int last_status);
+void set_locale_c(char ***my_env_ref);
+void setup_terminal_pgrp(void);
+int run_shell_loop(char ***my_env_ref);
+void set_exit_requested(void);
+int get_exit_requested(void);
+void setup_signals(void);
 
 #endif

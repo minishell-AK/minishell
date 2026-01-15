@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: copilot <copilot@example.com>               +#+  +:+       +#+        */
+/*   By: copilot <copilot@ai>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:00:00 by copilot           #+#    #+#             */
 /*   Updated: 2026/01/15 12:00:00 by copilot          ###   ########.fr       */
