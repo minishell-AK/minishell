@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 00:39:26 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/13 21:35:46 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 #include <readline/readline.h>
 
 /* build_tmp_name and try_create_tmp moved to parser_heredoc_tmp.c */
+
+static int	make_tmpfile_loop(char *name, pid_t pid, int *seq,
+				char *out, size_t out_sz);
 
 char	*read_trimmed_line(void)
 {
@@ -48,7 +51,6 @@ char	*read_trimmed_line(void)
 int	open_unique_tmpfile(char *out, size_t out_sz)
 {
 	char		name[128];
-	int			fd;
 	pid_t		pid;
 	static int	seq;
 
@@ -58,16 +60,24 @@ int	open_unique_tmpfile(char *out, size_t out_sz)
 	seq++;
 	if (seq <= 0)
 		seq = 1;
-	while (seq < 100000)
+	return (make_tmpfile_loop(name, pid, &seq, out, out_sz));
+}
+
+static int	make_tmpfile_loop(char *name, pid_t pid, int *seq,
+				char *out, size_t out_sz)
+{
+	int fd;
+
+	while (*seq < 100000)
 	{
-		if (build_tmp_name(name, pid, seq) == -1)
+		if (build_tmp_name(name, pid, *seq) == -1)
 			return (-1);
 		fd = try_create_tmp(name, out, out_sz);
 		if (fd != -1)
 			return (fd);
 		if (errno != EEXIST)
 			return (-1);
-		seq++;
+		(*seq)++;
 	}
 	return (-1);
 }

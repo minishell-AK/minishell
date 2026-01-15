@@ -1,0 +1,24 @@
+minishell$ ls
+Makefile
+README.md
+docs
+entrada_exec.txt
+estrutura
+include
+libft
+minishell
+ng_3_minishell.pdf
+ng_3_minishell.txt
+objs
+readline.supp
+scripts
+src
+tests
+tmp
+minishell$ echo hello
+hello
+minishell$ export B=xyz
+minishell$ echo ${B}
+xyz
+minishell$ unset B
+minishell$ exit

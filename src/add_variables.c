@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 14:13:40 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/07 16:12:50 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/15 00:37:56 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,15 @@ char	**copy_env(char **env)
 	i = 0;
 	while (env[i] != NULL)
 	{
-		env_copy[i] = env[i];
+		env_copy[i] = ft_strdup(env[i]);
+		if (!env_copy[i])
+		{
+			/* free previously duplicated entries on failure */
+			while (i-- > 0)
+				free(env_copy[i]);
+			free(env_copy);
+			return (NULL);
+		}
 		i++;
 	}
 	env_copy[i] = NULL;
@@ -88,5 +96,30 @@ t_all_variables	*add_variables(t_cmd *cmd, char ***envp_ref)
 	}
 	vars->path = create_array_path(*envp_ref);
 	vars->pids = (int *)malloc((size_list_cmd(cmd)) * sizeof(int));
+	if (!vars->pids)
+	{
+		if (vars->path)
+		{
+			size_t i = 0;
+			while (vars->path[i])
+			{
+				free(vars->path[i]);
+				i++;
+			}
+			free(vars->path);
+		}
+		if (vars->env)
+		{
+			size_t j = 0;
+			while (vars->env[j])
+			{
+				free(vars->env[j]);
+				j++;
+			}
+			free(vars->env);
+		}
+		free(vars);
+		return (NULL);
+	}
 	return (vars);
 }

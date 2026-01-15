@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all_variables.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 13:52:08 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/03 16:36:00 by armeneze         ###   ########.fr       */
+/*   Updated: 2026/01/15 00:22:01 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,15 @@ void	free_all_variables(t_all_variables *all_variables)
 	if (!all_variables)
 		return ;
 	if (all_variables->env)
+	{
+		i = 0;
+		while (all_variables->env[i])
+		{
+			free(all_variables->env[i]);
+			i++;
+		}
 		free(all_variables->env);
+	}
 	if (all_variables->path)
 	{
 		i = 0;

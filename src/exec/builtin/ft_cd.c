@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 00:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/07 15:45:27 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
+
+static int	set_env_pair(char ***envp_ref, const char *key, const char *value);
+static void	obtain_old_pwd(char *current_pwd, char *old_pwd);
 
 static char	*get_env_value_simple(char **envp, const char *name)
 {
@@ -38,8 +41,6 @@ static char	*get_env_value_simple(char **envp, const char *name)
 static int	update_pwd_env(char ***envp_ref, const char *old_pwd)
 {
 	char	cwd[PATH_MAX];
-	char	*new_entry;
-	int		idx;
 
 	if (!getcwd(cwd, sizeof(cwd)))
 	{
@@ -48,19 +49,23 @@ static int	update_pwd_env(char ***envp_ref, const char *old_pwd)
 	}
 	if (old_pwd)
 	{
-		new_entry = env_make_entry("OLDPWD", old_pwd);
-		if (!new_entry)
+		if (set_env_pair(envp_ref, "OLDPWD", old_pwd) != 0)
 			return (1);
-		idx = env_find_index(*envp_ref, "OLDPWD");
-		if (idx >= 0)
-			(*envp_ref)[idx] = new_entry;
-		else
-			env_append_entry(envp_ref, new_entry);
 	}
-	new_entry = env_make_entry("PWD", cwd);
+	if (set_env_pair(envp_ref, "PWD", cwd) != 0)
+		return (1);
+	return (0);
+}
+
+static int	set_env_pair(char ***envp_ref, const char *key, const char *value)
+{
+	char *new_entry;
+	int idx;
+
+	new_entry = env_make_entry((char *)key, value);
 	if (!new_entry)
 		return (1);
-	idx = env_find_index(*envp_ref, "PWD");
+	idx = env_find_index(*envp_ref, key);
 	if (idx >= 0)
 		(*envp_ref)[idx] = new_entry;
 	else
@@ -109,10 +114,7 @@ int	ft_cd(char **args, char ***envp_ref)
 		return (1);
 	}
 	current_pwd = get_env_value_simple(*envp_ref, "PWD");
-	if (current_pwd)
-		ft_strlcpy(old_pwd, current_pwd, sizeof(old_pwd));
-	else if (!getcwd(old_pwd, sizeof(old_pwd)))
-		old_pwd[0] = '\0';
+	obtain_old_pwd(current_pwd, old_pwd);
 	path = resolve_cd_path(args, *envp_ref);
 	if (!path)
 		return (1);
@@ -123,4 +125,12 @@ int	ft_cd(char **args, char ***envp_ref)
 		return (1);
 	}
 	return (update_pwd_env(envp_ref, old_pwd));
+}
+
+static void	obtain_old_pwd(char *current_pwd, char *old_pwd)
+{
+	if (current_pwd)
+		ft_strlcpy(old_pwd, current_pwd, sizeof(old_pwd));
+	else if (!getcwd(old_pwd, sizeof(old_pwd)))
+		old_pwd[0] = '\0';
 }

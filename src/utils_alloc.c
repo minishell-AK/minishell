@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 20:26:57 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/08 17:45:44 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/15 01:58:02 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static void	free_out(char **out, size_t count)
 		free(out[count]);
 	free(out);
 }
+/* No at-exit registration: keep ownership simple — caller must free. */
+
 
 char	**dup_envp(char **envp)
 {
@@ -66,7 +68,6 @@ void	free_envp(char **envp)
 	}
 	free(envp);
 }
-
 void	*xrealloc(void *ptr, size_t new_size)
 {
 	void    *nptr;

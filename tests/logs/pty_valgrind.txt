@@ -1,0 +1,76 @@
+==217937== Memcheck, a memory error detector
+==217937== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==217937== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==217937== Command: ./minishell
+==217937== 
+cat << oi
+fjsdhf
+^C[?2004hminishell$ export A=gjsfdhg
+[?2004l[?2004hminishell$ echo ${A}
+[?2004lgjsfdhg
+==217959== 
+==217959== HEAP SUMMARY:
+==217959==     in use at exit: 248,396 bytes in 458 blocks
+==217959==   total heap usage: 916 allocs, 458 frees, 291,308 bytes allocated
+==217959== 
+==217959== LEAK SUMMARY:
+==217959==    definitely lost: 0 bytes in 0 blocks
+==217959==    indirectly lost: 0 bytes in 0 blocks
+==217959==      possibly lost: 0 bytes in 0 blocks
+==217959==    still reachable: 248,396 bytes in 458 blocks
+==217959==         suppressed: 0 bytes in 0 blocks
+==217959== Reachable blocks (those to which a pointer was found) are not shown.
+==217959== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==217959== 
+==217959== For lists of detected and suppressed errors, rerun with: -s
+==217959== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004hminishell$ fd
+[?2004lfd: command not found
+fd: command not found
+==217964== 
+==217964== HEAP SUMMARY:
+==217964==     in use at exit: 248,410 bytes in 460 blocks
+==217964==   total heap usage: 1,124 allocs, 664 frees, 302,345 bytes allocated
+==217964== 
+==217964== LEAK SUMMARY:
+==217964==    definitely lost: 0 bytes in 0 blocks
+==217964==    indirectly lost: 0 bytes in 0 blocks
+==217964==      possibly lost: 0 bytes in 0 blocks
+==217964==    still reachable: 248,410 bytes in 460 blocks
+==217964==         suppressed: 0 bytes in 0 blocks
+==217964== Reachable blocks (those to which a pointer was found) are not shown.
+==217964== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==217964== 
+==217964== For lists of detected and suppressed errors, rerun with: -s
+==217964== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004hminishell$ df
+[?2004lFilesystem     1K-blocks      Used Available Use% Mounted on
+tmpfs            1632600      2492   1630108   1% /run
+/dev/sdb2      228554124 140454724  76416636  65% /
+tmpfs            8163000     50012   8112988   1% /dev/shm
+tmpfs               5120        12      5108   1% /run/lock
+efivarfs             128        38        86  31% /sys/firmware/efi/efivars
+/dev/sdb1        1098628      6288   1092340   1% /boot/efi
+tmpfs            1632600     26924   1605676   2% /run/user/1000
+[?2004hminishell$ ls
+[?2004lMakefile	  estrutura  ng_3_minishell.pdf  scripts
+README.md	  include    ng_3_minishell.txt  src
+docs		  libft      objs		 tests
+entrada_exec.txt  minishell  readline.supp	 tmp
+[?2004hminishell$ [?2004l
+==217937== 
+==217937== HEAP SUMMARY:
+==217937==     in use at exit: 232,813 bytes in 234 blocks
+==217937==   total heap usage: 1,343 allocs, 1,109 frees, 318,328 bytes allocated
+==217937== 
+==217937== LEAK SUMMARY:
+==217937==    definitely lost: 0 bytes in 0 blocks
+==217937==    indirectly lost: 0 bytes in 0 blocks
+==217937==      possibly lost: 0 bytes in 0 blocks
+==217937==    still reachable: 232,813 bytes in 234 blocks
+==217937==         suppressed: 0 bytes in 0 blocks
+==217937== Reachable blocks (those to which a pointer was found) are not shown.
+==217937== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==217937== 
+==217937== For lists of detected and suppressed errors, rerun with: -s
+==217937== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

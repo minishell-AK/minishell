@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armeneze <armeneze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 11:52:19 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/02 14:53:45 by armeneze         ###   ########.fr       */
+/*   Updated: 2026/01/15 00:32:22 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,18 @@ static void	free_matrix(char **matrix)
 	free(matrix);
 }
 
-static char	*check_path_access(char *dir, char *cmd)
+static char *check_path_access(char *dir, char *cmd)
 {
-	char	*slash_path;
-	char	*full_path;
+	char    *slash_path;
+	char    *full_path;
 
-	slash_path = ft_strjoin(ft_strdup(dir), "/");
+	slash_path = ft_strjoin(dir, "/");
 	if (!slash_path)
 		return (NULL);
 	full_path = ft_strjoin(slash_path, cmd);
+	free(slash_path);
+	if (!full_path)
+		return (NULL);
 	if (access(full_path, F_OK | X_OK) == 0)
 		return (full_path);
 	free(full_path);

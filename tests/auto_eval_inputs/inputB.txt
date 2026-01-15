@@ -1,0 +1,19 @@
+# Grupo B: env, export, unset, cd, pwd, relative path, PATH
+env
+export TESTVAR=hello
+env
+echo $TESTVAR
+unset TESTVAR
+env
+pwd
+cd ..
+pwd
+cd -
+# relative path (assumes src exists)
+./minishell --version || echo "relative-run-failed"
+# PATH manipulation
+unset PATH
+echo ls_should_fail_because_no_path
+export PATH=/bin:/usr/bin
+echo PATH_reset
+exit

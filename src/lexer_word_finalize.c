@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_finalize.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 19:30:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:42:30 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+static void	determine_token_flags(t_token *t, t_seg *segs);
+static void	collect_token_flags(t_seg *segs, int *all_single, int *seen_double);
+
 static void	set_token_flags(t_token *t, t_seg *segs)
 {
-	t_seg	*it;
-	int		all_single;
-	int		seen_double;
+	determine_token_flags(t, segs);
+}
 
-	all_single = 1;
-	seen_double = 0;
-	it = segs;
-	while (it)
-	{
-		if (it->type != SEG_SINGLE_QUOTED)
-			all_single = 0;
-		if (it->type == SEG_DOUBLE_QUOTED)
-			seen_double = 1;
-		it = it->next;
-	}
+static void	determine_token_flags(t_token *t, t_seg *segs)
+{
+	int	all_single;
+	int	seen_double;
+
+	collect_token_flags(segs, &all_single, &seen_double);
 	if (all_single)
 		t->no_expand = 1;
 	else
@@ -40,6 +37,23 @@ static void	set_token_flags(t_token *t, t_seg *segs)
 		t->in_double = 1;
 	else
 		t->in_double = 0;
+}
+
+static void	collect_token_flags(t_seg *segs, int *all_single, int *seen_double)
+{
+	t_seg	*it;
+
+	*all_single = 1;
+	*seen_double = 0;
+	it = segs;
+	while (it)
+	{
+		if (it->type != SEG_SINGLE_QUOTED)
+			*all_single = 0;
+		if (it->type == SEG_DOUBLE_QUOTED)
+			*seen_double = 1;
+		it = it->next;
+	}
 }
 
 static size_t	calc_total_len(t_seg *segs)

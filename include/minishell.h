@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/14 22:21:34 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/15 03:05:38 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	*xrealloc(void *ptr, size_t new_size);
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	free_envp(char **envp);
+void	register_envp_ref(char ***envp_ref);
+void	unregister_envp_ref(void);
+void	cleanup_and_exit(int status);
 int		is_space_char(int c);
 int		env_append_entry(char ***envp_ref, char *entry);
 int		env_find_index(char **envp, const char *name);

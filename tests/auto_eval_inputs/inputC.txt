@@ -1,0 +1,15 @@
+# Grupo C: redirections, pipes, heredoc
+/bin/echo one > /tmp/minishell_test_file
+cat /tmp/minishell_test_file
+/bin/echo two >> /tmp/minishell_test_file
+cat /tmp/minishell_test_file | grep one
+cat < /tmp/minishell_test_file
+# heredoc
+cat << EOF > /tmp/minishell_heredoc_test
+line1
+line2
+EOF
+cat /tmp/minishell_heredoc_test
+rm /tmp/minishell_test_file || true
+rm /tmp/minishell_heredoc_test || true
+exit

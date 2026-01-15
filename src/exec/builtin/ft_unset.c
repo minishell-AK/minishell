@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 00:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/07 16:40:30 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "minishell.h"
 #include <stdlib.h>
+
+static void	shift_env_left(char **dst, char **src, int start, int count);
 
 static int	is_valid_var_name(const char *str)
 {
@@ -49,14 +51,22 @@ static void	remove_env_entry(char ***envp_ref, int idx)
 		i++;
 	}
 	free((*envp_ref)[idx]);
-	while (i < count - 1)
-	{
-		new_envp[i] = (*envp_ref)[i + 1];
-		i++;
-	}
-	new_envp[i] = NULL;
+	shift_env_left(new_envp, *envp_ref, i, count);
 	free(*envp_ref);
 	*envp_ref = new_envp;
+}
+
+static void	shift_env_left(char **dst, char **src, int start, int count)
+{
+	int i;
+
+	i = start;
+	while (i < count - 1)
+	{
+		dst[i] = src[i + 1];
+		i++;
+	}
+	dst[i] = NULL;
 }
 
 static int	unset_variable(char *var_name, char ***envp_ref)

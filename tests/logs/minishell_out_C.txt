@@ -1,0 +1,20 @@
+minishell$ # Grupo C: redirections, pipes, heredoc
+#: command not found
+minishell$ /bin/echo one > /tmp/minishell_test_file
+minishell$ cat /tmp/minishell_test_file
+one
+minishell$ /bin/echo two >> /tmp/minishell_test_file
+minishell$ cat /tmp/minishell_test_file | grep one
+one
+minishell$ cat < /tmp/minishell_test_file
+one
+two
+minishell$ # heredoc
+#: command not found
+minishell$ cat << EOF > /tmp/minishell_heredoc_test
+minishell$ cat /tmp/minishell_heredoc_test
+line1
+line2
+minishell$ rm /tmp/minishell_test_file || true
+minishell$ rm /tmp/minishell_heredoc_test || true
+minishell$ exit

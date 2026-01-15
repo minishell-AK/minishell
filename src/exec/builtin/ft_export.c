@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 00:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/07 16:12:50 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "minishell.h"
 #include <stdio.h>
 #include <string.h>
+
+static char	**duplicate_and_sort_env(char **envp);
+static void	print_env_array(char **arr);
+static int	set_env_entry(char *arg, char ***envp_ref);
+static void	assign_or_append(int idx, char ***envp_ref, char *new_entry);
 
 static int	is_valid_identifier(const char *str)
 {
@@ -50,16 +55,27 @@ static char	*get_var_name(const char *entry)
 
 static void	print_sorted_env(char **envp)
 {
-	int		i;
-	int		j;
+	char **sorted;
+
+	sorted = duplicate_and_sort_env(envp);
+	if (!sorted)
+		return ;
+	print_env_array(sorted);
+	free(sorted);
+}
+
+static char	**duplicate_and_sort_env(char **envp)
+{
+	int	count;
 	char	**sorted;
+	int	i;
+	int	j;
 	char	*tmp;
-	int		count;
 
 	count = count_size_array_char(envp);
 	sorted = malloc(sizeof(char *) * (count + 1));
 	if (!sorted)
-		return ;
+		return (NULL);
 	i = -1;
 	while (++i < count)
 		sorted[i] = envp[i];
@@ -78,19 +94,20 @@ static void	print_sorted_env(char **envp)
 			}
 		}
 	}
+	return (sorted);
+}
+
+static void	print_env_array(char **arr)
+{
+	int i;
+
 	i = -1;
-	while (sorted[++i])
-	{
-		printf("declare -x %s\n", sorted[i]);
-	}
-	free(sorted);
+	while (arr[++i])
+		printf("declare -x %s\n", arr[i]);
 }
 
 static int	export_variable(char *arg, char ***envp_ref)
 {
-	char	*name;
-	char	*new_entry;
-	int		idx;
 
 	if (!is_valid_identifier(arg))
 	{
@@ -101,6 +118,15 @@ static int	export_variable(char *arg, char ***envp_ref)
 	}
 	if (!ft_strchr(arg, '='))
 		return (0);
+	return (set_env_entry(arg, envp_ref));
+}
+
+static int	set_env_entry(char *arg, char ***envp_ref)
+{
+	char *name;
+	char *new_entry;
+	int idx;
+
 	name = get_var_name(arg);
 	if (!name)
 		return (1);
@@ -112,6 +138,12 @@ static int	export_variable(char *arg, char ***envp_ref)
 	}
 	idx = env_find_index(*envp_ref, name);
 	free(name);
+	assign_or_append(idx, envp_ref, new_entry);
+	return (0);
+}
+
+static void	assign_or_append(int idx, char ***envp_ref, char *new_entry)
+{
 	if (idx >= 0)
 	{
 		free((*envp_ref)[idx]);
@@ -119,7 +151,6 @@ static int	export_variable(char *arg, char ***envp_ref)
 	}
 	else
 		env_append_entry(envp_ref, new_entry);
-	return (0);
 }
 
 int	ft_export(char **args, char ***envp_ref)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:42:58 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/15 00:49:12 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ static t_token	*handle_assignment(t_token *tk, t_cmd **head,
 	value = ft_strdup(eq + 1);
 	if (!name || !value)
 	{
+		if (name)
+			free(name);
+		if (value)
+			free(value);
 		free_commands(*head);
 		return (NULL);
 	}

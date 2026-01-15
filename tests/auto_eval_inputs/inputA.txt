@@ -1,0 +1,11 @@
+# Grupo A: comandos simples, argumentos, echo, exit
+/bin/ls /
+/bin/echo hello world
+
+
+/bin/ls -l /
+echo
+echo -n no_newline
+echo "double quoted with spaces"
+echo '$USER'
+exit

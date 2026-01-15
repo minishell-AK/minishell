@@ -1,0 +1,7 @@
+cat <<EOF
+$HOME
+EOF
+export BBB=2
+echo $BBB
+unset BBB
+exit

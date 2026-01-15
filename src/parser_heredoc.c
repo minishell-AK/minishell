@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 23:50:37 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/14 21:18:47 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/15 01:03:19 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 #include <errno.h>
 #include <readline/readline.h>
 #include <termios.h>
+
+static void	heredoc_child_process(int fd, t_hdoc_ctx *ctx);
+static int	handle_heredoc_wait(pid_t pid, struct sigaction *old_sa);
+static int	handle_heredoc_signaled(struct sigaction *old_sa);
+static int	handle_heredoc_exited(int status, struct sigaction *old_sa);
 
 int	write_heredoc_entry(int fd, char *line, int expand, char **envp)
 {
@@ -76,49 +81,72 @@ static int	spawn_heredoc_reader(int fd, t_hdoc_ctx *ctx)
 	}
 	if (pid == 0)
 	{
-		signal(SIGINT, heredoc_sigint);
-		signal(SIGQUIT, SIG_IGN);
-		/* Let readline handle terminal signals in the heredoc child */
-		rl_catch_signals = 1;
-		int rc = heredoc_read_loop(fd, ctx);
-		if (rc == -1)
-			_exit(130);
-		_exit(0);
+		/* In child: run heredoc reader which will exit */
+		heredoc_child_process(fd, ctx);
 	}
+	/* In parent: wait for child and restore previous SIGINT handler */
+	status = handle_heredoc_wait(pid, &old_sa);
+	return (status);
+}
+
+static void	heredoc_child_process(int fd, t_hdoc_ctx *ctx)
+{
+	signal(SIGINT, heredoc_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	/* Let readline handle terminal signals in the heredoc child */
+	rl_catch_signals = 1;
+	int rc = heredoc_read_loop(fd, ctx);
+	if (rc == -1)
+		_exit(130);
+	_exit(0);
+}
+
+static int	handle_heredoc_wait(pid_t pid, struct sigaction *old_sa)
+{
+	int	status;
+
 	if (waitpid(pid, &status, 0) == -1)
 	{
-		sigaction(SIGINT, &old_sa, NULL);
+		sigaction(SIGINT, old_sa, NULL);
 		return (-1);
 	}
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		return (handle_heredoc_signaled(old_sa));
+	if (WIFEXITED(status))
+		return (handle_heredoc_exited(status, old_sa));
+	sigaction(SIGINT, old_sa, NULL);
+	return (-1);
+
+}
+
+static int	handle_heredoc_signaled(struct sigaction *old_sa)
+{
+	/* Ensure a newline separates heredoc output from prompt, then restore readline state */
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	/* restore original SIGINT handler before returning */
+	sigaction(SIGINT, old_sa, NULL);
+	return (-1);
+}
+
+static int	handle_heredoc_exited(int status, struct sigaction *old_sa)
+{
+	if (WEXITSTATUS(status) == 130)
 	{
+		/* Child exited with code 130 (interrupted) */
 		/* Ensure a newline separates heredoc output from prompt, then restore readline state */
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		/* restore original SIGINT handler before returning */
-		sigaction(SIGINT, &old_sa, NULL);
+		sigaction(SIGINT, old_sa, NULL);
 		return (-1);
 	}
-	if (WIFEXITED(status))
-	{
-		if (WEXITSTATUS(status) == 130)
-		{
-			/* Child exited with code 130 (interrupted) */
-			/* Ensure a newline separates heredoc output from prompt, then restore readline state */
-			write(1, "\n", 1);
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			/* restore original SIGINT handler before returning */
-			sigaction(SIGINT, &old_sa, NULL);
-			return (-1);
-		}
-		return (0);
-	}
-	sigaction(SIGINT, &old_sa, NULL);
-	return (-1);
+	/* restore original SIGINT handler for normal exit as well */
+	sigaction(SIGINT, old_sa, NULL);
+	return (0);
 }
-
 static char	*read_heredoc_lines(const char *delimiter, int expand,
 	char **envp)
 {

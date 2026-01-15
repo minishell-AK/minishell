@@ -1,0 +1,10 @@
+cat <<EOF
+line1
+line2
+EOF
+echo before
+export DDD=4
+echo $DDD
+unset DDD
+ls -l /nonexistent || true
+exit

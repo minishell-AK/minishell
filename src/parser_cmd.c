@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/14 19:12:39 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+static int	reject_multiple_out_redirs(t_cmd *cmd);
 
 t_cmd	*cmd_new(void)
 {
@@ -72,17 +74,8 @@ int	add_redir(t_cmd *cmd, t_redir_type type, const char *target)
 	/* Reject multiple output redirections for the same command */
 	if (type == REDIR_OUT || type == APPEND)
 	{
-		t_redir *it = cmd->redirs;
-		while (it)
-		{
-			if (it->type == REDIR_OUT || it->type == APPEND)
-			{
-				ft_putstr_fd("minishell: syntax error: multiple output redirections\n", STDOUT_FILENO);
-				ft_putstr_fd("minishell: syntax error: multiple output redirections\n", 2);
-				return (-1);
-			}
-			it = it->next;
-		}
+		if (reject_multiple_out_redirs(cmd) == -1)
+			return (-1);
 	}
 	r = malloc(sizeof(t_redir));
 	if (!r)
@@ -91,6 +84,24 @@ int	add_redir(t_cmd *cmd, t_redir_type type, const char *target)
 	r->file = ft_strdup(target);
 	r->next = cmd->redirs;
 	cmd->redirs = r;
+	return (0);
+}
+
+static int	reject_multiple_out_redirs(t_cmd *cmd)
+{
+	t_redir *it;
+
+	it = cmd->redirs;
+	while (it)
+	{
+		if (it->type == REDIR_OUT || it->type == APPEND)
+		{
+			ft_putstr_fd("minishell: syntax error: multiple output redirections\n", STDOUT_FILENO);
+			ft_putstr_fd("minishell: syntax error: multiple output redirections\n", 2);
+			return (-1);
+		}
+		it = it->next;
+	}
 	return (0);
 }
 

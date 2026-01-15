@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 21:53:24 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/14 19:33:34 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,102 +17,9 @@
 #include <string.h>
 #include <stdio.h>
 
-static int	expand_var(t_exp *ctx, const char *s, size_t *i)
-{
-	size_t	j;
-	size_t	namelen;
-	char	*name;
-	char	*val;
-
-	j = *i + 1;
-	while (s[j] && (ft_isalnum((unsigned char)s[j]) || s[j] == '_'))
-		j++;
-	namelen = j - (*i + 1);
-	name = malloc(namelen + 1);
-	if (!name)
-		return (0);
-	memcpy(name, s + *i + 1, namelen);
-	name[namelen] = '\0';
-	val = get_env_value(ctx->envp, name);
-	if (!val)
-		val = "";
-	free(name);
-	if (!expand_buf(ctx, val))
-		return (0);
-	*i = j;
-	return (1);
-}
-
-static int	expand_dollar(t_exp *ctx, const char *s, size_t *i)
-{
-	if (s[*i + 1] == '?')
-		return (expand_status(ctx, i));
-	if (s[*i + 1] == '{')
-	{
-		size_t	j;
-		size_t	namelen;
-		char	*name;
-		char	*val;
-
-		j = *i + 2;
-		while (s[j] && (ft_isalnum((unsigned char)s[j]) || s[j] == '_'))
-			j++;
-		if (s[j] == '}')
-		{
-			namelen = j - (*i + 2);
-			name = malloc(namelen + 1);
-			if (!name)
-				return (0);
-			memcpy(name, s + *i + 2, namelen);
-			name[namelen] = '\0';
-			val = get_env_value(ctx->envp, name);
-			if (!val)
-				val = "";
-			free(name);
-			if (!expand_buf(ctx, val))
-				return (0);
-			*i = j + 1;
-			return (1);
-		}
-		/* no closing brace: fall through to treat '$' as literal */
-	}
-	if (ft_isalpha((unsigned char)s[*i + 1]) || s[*i + 1] == '_')
-		return (expand_var(ctx, s, i));
-	if (!expand_char(ctx))
-		return (0);
-	ctx->out[ctx->out_len++] = '$';
-	(*i)++;
-	return (1);
-}
-
-char	*expand_line(const char *s, char **envp, int last_status)
-{
-	t_exp	ctx;
-	size_t	i;
-
-	ctx.envp = envp;
-	ctx.last_status = last_status;
-	ctx.cap = strlen(s) + 1;
-	ctx.out = malloc(ctx.cap);
-	if (!ctx.out)
-		return (NULL);
-	ctx.out_len = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '$')
-		{
-			if (!expand_dollar(&ctx, s, &i))
-				return (free(ctx.out), NULL);
-			continue ;
-		}
-		if (!expand_char(&ctx))
-			return (free(ctx.out), NULL);
-		ctx.out[ctx.out_len++] = s[i++];
-	}
-	ctx.out[ctx.out_len] = '\0';
-	return (ctx.out);
-}
+/* declare expand_line implemented in expander_core.c */
+char	*expand_line(const char *s, char **envp, int last_status);
+int	expand_dollar(t_exp *ctx, const char *s, size_t *i);
 
 static void	expand_segment(t_seg *seg, char **envp, int last_status)
 {
