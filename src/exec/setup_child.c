@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_child.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 10:19:16 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 18:15:15 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	setup_child_io(t_cmd *cmd, t_cmd *head_list)
 
 static void	process_redirections(t_redir **redir_ptr, int *fd_in, int *fd_out)
 {
-	t_redir *r;
+	t_redir	*r;
 
 	r = *redir_ptr;
 	while (r != NULL)

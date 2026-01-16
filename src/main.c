@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:58:43 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:58:44 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 19:27:28 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 #include "parser.h"
 #include "exec.h"
 #include "lexer.h"
 #include "../libft/libft.h"
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,11 +26,10 @@
 #include <termios.h>
 #include "main_helpers.h"
 
-
 int	main(int argc, char **argv, char **envp)
 {
 	char	**my_env;
-	int	last_status;
+	int		last_status;
 
 	(void)argc;
 	(void)argv;

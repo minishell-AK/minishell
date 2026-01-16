@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 00:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/15 17:23:31 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 17:55:57 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "minishell.h"
 #include "ft_cd_helpers.h"
-
 
 int	ft_cd(char **args, char ***envp_ref)
 {
@@ -39,5 +38,3 @@ int	ft_cd(char **args, char ***envp_ref)
 	}
 	return (update_pwd_env(envp_ref, old_pwd));
 }
-
-

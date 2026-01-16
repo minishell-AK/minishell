@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:00:50 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 20:00:52 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 19:00:36 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	open_unique_tmpfile(char *out, size_t out_sz)
 
 static int	make_tmpfile_loop(pid_t pid, int *seq, char *out, size_t out_sz)
 {
-	int     fd;
-	char    name[128];
+	int		fd;
+	char	name[128];
 
 	while (*seq < 100000)
 	{

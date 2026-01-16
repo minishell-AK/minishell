@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   main_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:58:28 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:58:29 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 19:18:00 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "main_helpers.h"
 #include "minishell.h"
@@ -39,7 +37,7 @@ void	sigquit_handler(int sig)
 
 void	setup_signals(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	memset(&sa, 0, sizeof(sa));
 	sa.sa_handler = sigint_handler;
@@ -53,10 +51,8 @@ void	setup_signals(void)
 	sa.sa_flags = 0;
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 		perror("sigaction");
-
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
-
 	rl_catch_signals = 0;
 }

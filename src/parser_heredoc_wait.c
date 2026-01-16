@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_wait.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:01:00 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 20:01:02 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 19:00:08 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "parser.h"
 #include "parser_heredoc_helpers.h"
@@ -24,7 +23,7 @@
 
 int	install_sigint_ignore(struct sigaction *old_sa)
 {
-	struct sigaction ign_sa;
+	struct sigaction	ign_sa;
 
 	memset(&ign_sa, 0, sizeof(ign_sa));
 	ign_sa.sa_handler = SIG_IGN;
@@ -59,7 +58,7 @@ static int	handle_heredoc_exited(int status, struct sigaction *old_sa)
 
 int	handle_heredoc_wait(pid_t pid, struct sigaction *old_sa)
 {
-	int status;
+	int	status;
 
 	if (waitpid(pid, &status, 0) == -1)
 	{

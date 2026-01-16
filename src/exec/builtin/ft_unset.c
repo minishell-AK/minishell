@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 00:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 17:37:09 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	remove_env_entry(char ***envp_ref, int idx)
 
 static void	shift_env_left(char **dst, char **src, int start, int count)
 {
-	int i;
+	int	i;
 
 	i = start;
 	while (i < count - 1)

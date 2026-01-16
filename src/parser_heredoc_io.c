@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_io.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:00:12 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 20:00:13 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 19:04:45 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "parser.h"
 #include "parser_heredoc_helpers.h"
@@ -19,7 +17,7 @@
 
 int	write_heredoc_entry(int fd, char *line, int expand, char **envp)
 {
-	char *expanded;
+	char	*expanded;
 
 	if (expand)
 	{
@@ -41,8 +39,8 @@ int	write_heredoc_entry(int fd, char *line, int expand, char **envp)
 char	*read_heredoc_lines(const char *delimiter, int expand, char **envp)
 {
 	char		template[128];
-	int		fd;
-	int		res;
+	int			fd;
+	int			res;
 	t_hdoc_ctx	ctx;
 
 	fd = open_unique_tmpfile(template, sizeof(template));

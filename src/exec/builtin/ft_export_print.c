@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_print.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:51:59 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:52:00 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 17:50:01 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "ft_export.h"
 #include "../../../libft/libft.h"
@@ -19,60 +17,60 @@
 
 static void	sort_env_array(char **arr, int count)
 {
-    int i;
-    int j;
-    char *tmp;
+	int		i;
+	int		j;
+	char	*tmp;
 
-    i = -1;
-    while (++i < count - 1)
-    {
-        j = i;
-        while (++j < count)
-        {
-            if (ft_strncmp(arr[i], arr[j], ft_strlen(arr[i])) > 0)
-            {
-                tmp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = tmp;
-            }
-        }
-    }
+	i = -1;
+	while (++i < count - 1)
+	{
+		j = i;
+		while (++j < count)
+		{
+			if (ft_strncmp(arr[i], arr[j], ft_strlen(arr[i])) > 0)
+			{
+				tmp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = tmp;
+			}
+		}
+	}
 }
 
-static char **duplicate_and_sort_env(char **envp)
+static char	**duplicate_and_sort_env(char **envp)
 {
-    int count;
-    char **sorted;
-    int i;
+	int		count;
+	char	**sorted;
+	int		i;
 
-    count = count_size_array_char(envp);
-    sorted = malloc(sizeof(char *) * (count + 1));
-    if (!sorted)
-        return (NULL);
-    i = -1;
-    while (++i < count)
-        sorted[i] = envp[i];
-    sorted[count] = NULL;
-    sort_env_array(sorted, count);
-    return (sorted);
+	count = count_size_array_char(envp);
+	sorted = malloc(sizeof(char *) * (count + 1));
+	if (!sorted)
+		return (NULL);
+	i = -1;
+	while (++i < count)
+		sorted[i] = envp[i];
+	sorted[count] = NULL;
+	sort_env_array(sorted, count);
+	return (sorted);
 }
 
-static void	print_env_array(char **arr)
+static	void	print_env_array(char **arr)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    while (arr[++i])
-        printf("declare -x %s\n", arr[i]);
+	i = -1;
+	while (arr[++i])
+		printf("declare -x %s\n", arr[i]);
 }
 
 void	print_sorted_env(char **envp)
 {
-    char **sorted;
+	char	**sorted;
 
-    sorted = duplicate_and_sort_env(envp);
-    if (!sorted)
-        return ;
-    print_env_array(sorted);
-    free(sorted);
+	sorted = duplicate_and_sort_env(envp);
+	if (!sorted)
+		return ;
+	print_env_array(sorted);
+	free(sorted);
 }

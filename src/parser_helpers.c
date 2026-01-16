@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/15 16:16:50 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 19:06:40 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-/* helper implementations moved to parser_helpers_utils.c */
 
 t_token	*parse_word_token(t_token *tk, t_cmd **head, t_cmd **cur,
 		char ***envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 00:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/15 16:16:50 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/16 17:50:33 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int	ft_export(char **args, char ***envp_ref)
 {
-	int i;
-	int ret;
+	int	i;
+	int	ret;
 
 	if (!args[1])
 	{
@@ -34,4 +34,3 @@ int	ft_export(char **args, char ***envp_ref)
 	}
 	return (ret);
 }
-
