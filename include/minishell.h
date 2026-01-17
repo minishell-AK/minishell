@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/15 03:05:38 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 02:31:43 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,10 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
-/* Global flag set by the signal handler. */
 extern volatile sig_atomic_t	g_last_signal;
 
-/* Exit request accessor: prefer functions over a second global variable.
-	Use `set_exit_requested()` from other translation units and
-	`get_exit_requested()` where needed. */
 void	set_exit_requested(void);
-int	get_exit_requested(void);
+int		get_exit_requested(void);
 
 /* utilities provided by the parser/runtime */
 char	**dup_envp(char **envp);

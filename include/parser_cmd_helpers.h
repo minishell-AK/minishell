@@ -1,10 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_cmd_helpers.h                             :+:      :+:    :+:   */
+/*   parser_cmd_helpers.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   Created: 2026/01/15 14:20:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/01/15 14:20:00 by copilot          ###   ########.fr       */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/17 02:30:43 by kakubo-l          #+#    #+#             */
+/*   Updated: 2026/01/17 02:40:05 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +16,6 @@
 # include "parser.h"
 
 char	**copy_old_args(char **newargv, char **oldargs, size_t cnt);
-int	reject_multiple_out_redirs(t_cmd *cmd);
+int		reject_multiple_out_redirs(t_cmd *cmd);
 
 #endif

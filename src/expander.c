@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 21:53:24 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/14 23:56:42 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:17:12 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-
-/* declare expand_line implemented in expander_core.c */
-char	*expand_line(const char *s, char **envp, int last_status);
-int	expand_dollar(t_exp *ctx, const char *s, size_t *i);
 
 static void	expand_segment(t_seg *seg, char **envp, int last_status)
 {

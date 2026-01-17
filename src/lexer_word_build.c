@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_build.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:57:39 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:57:40 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:08:07 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "lexer.h"
 #include "lexer_word_finalize_helpers.h"
@@ -20,8 +18,8 @@
 
 size_t	calc_total_len(t_seg *segs)
 {
-	t_seg *it;
-	size_t len;
+	t_seg	*it;
+	size_t	len;
 
 	len = 0;
 	it = segs;
@@ -35,7 +33,7 @@ size_t	calc_total_len(t_seg *segs)
 
 int	build_raw_string(t_token *t, t_seg *segs, size_t len)
 {
-	t_seg *it;
+	t_seg	*it;
 
 	t->raw = (char *)malloc(len + 1);
 	if (!t->raw)

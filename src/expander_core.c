@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   expander_core.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:57:06 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:57:07 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:14:49 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "lexer.h"
 #include "../libft/libft.h"
@@ -22,7 +20,7 @@
 
 int	expand_dollar(t_exp *ctx, const char *s, size_t *i)
 {
-	int r;
+	int	r;
 
 	if (s[*i + 1] == '?')
 		return (expand_status(ctx, i));
@@ -39,8 +37,8 @@ int	expand_dollar(t_exp *ctx, const char *s, size_t *i)
 
 char	*expand_line(const char *s, char **envp, int last_status)
 {
-	t_exp ctx;
-	size_t i;
+	t_exp	ctx;
+	size_t	i;
 
 	ctx.envp = envp;
 	ctx.last_status = last_status;

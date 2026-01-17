@@ -3,56 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:55:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:55:57 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:53:23 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "cleanup_state.h"
 #include <stdlib.h>
 #include <readline/history.h>
 
-static char ***g_envp_ref = NULL;
-static int g_atexit_registered = 0;
-
-static void
-g_registered_cleanup(void)
+static t_cleanup_state	*cleanup_state(void)
 {
-    clear_history();
-    if (g_envp_ref && *g_envp_ref)
-    {
-        free_envp(*g_envp_ref);
-        *g_envp_ref = NULL;
-    }
+	static t_cleanup_state	st = {NULL, 0};
+
+	return (&st);
+}
+
+static void	g_registered_cleanup(void)
+{
+	t_cleanup_state	*st;
+
+	st = cleanup_state();
+	clear_history();
+	if (st->envp_ref && *(st->envp_ref))
+	{
+		free_envp(*(st->envp_ref));
+		*(st->envp_ref) = NULL;
+	}
 }
 
 void	register_envp_ref(char ***envp_ref)
 {
-    if (!envp_ref)
-        return ;
-    g_envp_ref = envp_ref;
-    if (!g_atexit_registered)
-    {
-        atexit(g_registered_cleanup);
-        g_atexit_registered = 1;
-    }
+	t_cleanup_state	*st;
+
+	if (!envp_ref)
+		return ;
+	st = cleanup_state();
+	st->envp_ref = envp_ref;
+	if (!st->atexit_registered)
+	{
+		atexit(g_registered_cleanup);
+		st->atexit_registered = 1;
+	}
 }
 
 void	unregister_envp_ref(void)
 {
-    g_envp_ref = NULL;
+	cleanup_state()->envp_ref = NULL;
 }
 
 void	cleanup_and_exit(int status)
 {
-    if (g_envp_ref && *g_envp_ref)
-    {
-        free_envp(*g_envp_ref);
-        *g_envp_ref = NULL;
-    }
-    clear_history();
-    g_envp_ref = NULL;
-    exit(status);
+	t_cleanup_state	*st;
+
+	st = cleanup_state();
+	if (st->envp_ref && *(st->envp_ref))
+	{
+		free_envp(*(st->envp_ref));
+		*(st->envp_ref) = NULL;
+	}
+	clear_history();
+	st->envp_ref = NULL;
+	exit(status);
 }

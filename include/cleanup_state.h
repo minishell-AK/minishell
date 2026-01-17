@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_variables.h                                    :+:      :+:    :+:   */
+/*   cleanup_state.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/17 03:50:13 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/17 03:51:05 by kakubo-l         ###   ########.fr       */
+/*   Created: 2026/01/17 00:00:00 by kakubo-l          #+#    #+#             */
+/*   Updated: 2026/01/17 01:32:13 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ADD_VARIABLES_H
-# define ADD_VARIABLES_H
+#ifndef CLEANUP_STATE_H
+# define CLEANUP_STATE_H
 
-# include "exec.h"
-
-char	**copy_env(char **env);
-char	**create_array_path(char **env);
-void	free_vars_and_arrays(t_all_variables *vars);
+typedef struct s_cleanup_state
+{
+	char	***envp_ref;
+	int		atexit_registered;
+}t_cleanup_state;
 
 #endif

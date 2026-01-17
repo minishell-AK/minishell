@@ -3,8 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   Created: 2026/01/15 12:55:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/01/15 12:55:00 by copilot          ###   ########.fr       */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/17 02:48:12 by kakubo-l          #+#    #+#             */
+/*   Updated: 2026/01/17 02:48:25 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +16,6 @@
 # include "exec.h"
 
 void	print_sorted_env(char **envp);
-int	export_variable(char *arg, char ***envp_ref);
+int		export_variable(char *arg, char ***envp_ref);
 
 #endif

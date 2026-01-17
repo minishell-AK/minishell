@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   add_variables_free.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:55:10 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:55:11 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:54:43 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "add_variables.h"
 #include <stdlib.h>
 
 void	free_string_array(char **arr)
 {
-	size_t i;
+	size_t	i;
 
 	if (!arr)
 		return ;

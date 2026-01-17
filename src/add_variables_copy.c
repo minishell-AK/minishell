@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   add_variables_copy.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:55:03 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:55:04 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:57:34 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "add_variables.h"
 #include "../libft/libft.h"
@@ -25,7 +23,7 @@ static void	free_partial_string_array(char **arr, int filled)
 
 static int	get_env_count(char **env)
 {
-	int i;
+	int	i;
 
 	if (!env)
 		return (0);
@@ -37,7 +35,7 @@ static int	get_env_count(char **env)
 
 static int	fill_env_copy(char **env, char **env_copy)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env[i] != NULL)
@@ -55,7 +53,7 @@ static int	fill_env_copy(char **env, char **env_copy)
 
 char	**copy_env(char **env)
 {
-	int	count;
+	int		count;
 	char	**env_copy;
 
 	if (!env)

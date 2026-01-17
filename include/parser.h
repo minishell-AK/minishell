@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 16:26:53 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:41:56 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/17 03:50:40 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	int			pipeout;
-	int			pipein;
+	int				pipeout;
+	int				pipein;
 	char			**args;
 	t_redir			*redirs;
 	struct s_cmd	*next;

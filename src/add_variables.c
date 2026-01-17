@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 14:13:40 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/15 16:16:50 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:53:49 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "minishell.h"
 #include "add_variables.h"
 #include <stdlib.h>
-
-
 
 t_all_variables	*add_variables(t_cmd *cmd, char ***envp_ref)
 {

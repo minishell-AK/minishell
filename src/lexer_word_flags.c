@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_flags.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:58:01 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:58:02 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:05:20 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "lexer.h"
 #include "lexer_word_finalize_helpers.h"
 
 void	determine_token_flags(t_token *t, t_seg *segs)
 {
-	int all_single;
-	int seen_double;
+	int	all_single;
+	int	seen_double;
 
 	collect_token_flags(segs, &all_single, &seen_double);
 	if (all_single)
@@ -33,7 +31,7 @@ void	determine_token_flags(t_token *t, t_seg *segs)
 
 void	collect_token_flags(t_seg *segs, int *all_single, int *seen_double)
 {
-	t_seg *it;
+	t_seg	*it;
 
 	*all_single = 1;
 	*seen_double = 0;

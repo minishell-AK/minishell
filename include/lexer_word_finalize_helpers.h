@@ -19,7 +19,7 @@ void	determine_token_flags(t_token *t, t_seg *segs);
 void	collect_token_flags(t_seg *segs, int *all_single, int *seen_double);
 void	set_token_flags(t_token *t, t_seg *segs);
 size_t	calc_total_len(t_seg *segs);
-int	build_raw_string(t_token *t, t_seg *segs, size_t len);
-int	finalize_empty_token(t_token **head);
+int		build_raw_string(t_token *t, t_seg *segs, size_t len);
+int		finalize_empty_token(t_token **head);
 
 #endif

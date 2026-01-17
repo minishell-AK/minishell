@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all_variables.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 13:52:08 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/15 15:24:39 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:10:34 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	free_redirs(t_redir *r)
 
 static void	free_string_array(char **arr)
 {
-	size_t i;
+	size_t	i;
 
 	if (!arr)
 		return ;
@@ -44,7 +44,7 @@ static void	free_string_array(char **arr)
 
 static void	free_args(char **args)
 {
-	size_t i;
+	size_t	i;
 
 	if (!args)
 		return ;

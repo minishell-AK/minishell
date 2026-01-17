@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   add_variables_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:55:43 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:55:44 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:54:21 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "add_variables.h"
 #include "../libft/libft.h"
@@ -18,7 +16,7 @@
 
 char	*find_path_string(char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!env)

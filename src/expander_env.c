@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   expander_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:57:12 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/15 19:57:13 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/17 01:10:55 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "lexer.h"
 #include "../libft/libft.h"
@@ -35,8 +33,6 @@ char	*get_env_value(char **envp, const char *name)
 	}
 	return (NULL);
 }
-
-/* removed int_to_str to reduce function count; use ft_itoa directly */
 
 int	expand_status(t_exp *ctx, size_t *i)
 {

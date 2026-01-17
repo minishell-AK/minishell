@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:41:49 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/17 01:16:38 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int		expand_char(t_exp *ctx);
 int		expand_status(t_exp *ctx, size_t *i);
 void	rebuild_raw(t_token *tk);
 char	*expand_line(const char *s, char **envp, int last_status);
+char	*expand_line(const char *s, char **envp, int last_status);
+int		expand_dollar(t_exp *ctx, const char *s, size_t *i);
 
 typedef struct s_seg_ctx
 {
