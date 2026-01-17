@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main_helpers.h"
 #include "minishell.h"
-#include <signal.h>
-#include <string.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <readline/readline.h>
 
 volatile sig_atomic_t	g_last_signal = 0;
 

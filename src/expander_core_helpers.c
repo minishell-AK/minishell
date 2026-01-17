@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expander_core.h"
-#include "lexer.h"
-#include "../libft/libft.h"
-#include <stdlib.h>
-#include <string.h>
+#include "minishell.h"
 
 int	expand_var(t_exp *ctx, const char *s, size_t *i)
 {

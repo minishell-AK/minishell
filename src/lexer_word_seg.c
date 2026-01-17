@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include <stdlib.h>
-#include <string.h>
+#include "minishell.h"
 
 static t_seg	*create_node(const char *src, size_t len, t_seg_type type)
 {

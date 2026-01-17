@@ -10,12 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "parser_cmd_helpers.h"
-#include "../libft/libft.h"
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "minishell.h"
 
 char	**copy_old_args(char **newargv, char **oldargs, size_t cnt)
 {

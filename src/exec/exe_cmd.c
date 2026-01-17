@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
-#include "parser.h"
 #include "minishell.h"
-#include <signal.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <termios.h>
 
 static void	handle_foreground(t_all_variables *all_variables)
 {

@@ -10,20 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main_helpers.h"
-#include "parser.h"
-#include "exec.h"
-#include "lexer.h"
 #include "minishell.h"
-#include "../libft/libft.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/ioctl.h>
-#include <termios.h>
 
 int	process_line(char *line, char ***envp_ref, int last_status)
 {

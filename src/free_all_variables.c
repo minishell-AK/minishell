@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exec.h"
 
 static void	free_redirs(t_redir *r)
 {

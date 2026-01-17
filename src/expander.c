@@ -10,12 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "../libft/libft.h"
 #include "minishell.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 
 static void	expand_segment(t_seg *seg, char **envp, int last_status)
 {

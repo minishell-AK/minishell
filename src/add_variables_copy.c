@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "add_variables.h"
-#include "../libft/libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 static void	free_partial_string_array(char **arr, int filled)
 {

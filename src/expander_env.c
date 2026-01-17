@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "../libft/libft.h"
 #include "minishell.h"
-#include <stdlib.h>
-#include <string.h>
 
 char	*get_env_value(char **envp, const char *name)
 {

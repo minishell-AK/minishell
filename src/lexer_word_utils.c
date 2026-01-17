@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "minishell.h"
-#include <stdlib.h>
-#include <string.h>
 
 int	collect_quoted(t_word_ctx *ctx, size_t *i, char quote)
 {

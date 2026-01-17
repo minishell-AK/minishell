@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
-#include "ft_cd_helpers.h"
-#include "../libft/libft.h"
-#include <unistd.h>
-#include <limits.h>
-#include <stdio.h>
-#include <string.h>
+#include "minishell.h"
 
 char	*get_env_value_simple(char **envp, const char *name)
 {

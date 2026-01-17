@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
-#include "parser.h"
 #include "minishell.h"
-#include "../../../libft/libft.h"
-#include <stdio.h>
 
 static int	is_numeric(const char *s)
 {

@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "parser.h"
-#include "exec.h"
 #include "minishell.h"
 
 static void	free_matrix(char **matrix)

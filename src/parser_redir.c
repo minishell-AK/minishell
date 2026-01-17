@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "../libft/libft.h"
 #include "minishell.h"
-#include <stdlib.h>
-#include <string.h>
 
 static t_redir_type	get_redir_type(t_token_type type)
 {

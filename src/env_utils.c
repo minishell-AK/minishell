@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "../libft/libft.h"
+#include "minishell.h"
 
 char	*env_make_entry(const char *name, const char *value)
 {

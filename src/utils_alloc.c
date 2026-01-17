@@ -11,10 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
-#include <string.h>
 
-#include "../libft/libft.h"
 
 static void	free_out(char **out, size_t count)
 {

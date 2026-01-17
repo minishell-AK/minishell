@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "minishell.h"
-#include <stdlib.h>
-#include <string.h>
 
 static int	handle_pipe(const char *line, size_t *i, t_token **head)
 {

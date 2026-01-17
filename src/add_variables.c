@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "exec.h"
 #include "minishell.h"
-#include "add_variables.h"
-#include <stdlib.h>
 
 t_all_variables	*add_variables(t_cmd *cmd, char ***envp_ref)
 {

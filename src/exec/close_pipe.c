@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
-#include "parser.h"
 #include "minishell.h"
 
 void	close_all_pipes(t_cmd *cmd)

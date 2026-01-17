@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "exec.h"
 #include "minishell.h"
 
 int	count_size_array_char(char **array)

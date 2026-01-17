@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "../libft/libft.h"
 #include "minishell.h"
-#include "expander_core.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 
 int	expand_dollar(t_exp *ctx, const char *s, size_t *i)
 {

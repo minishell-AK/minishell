@@ -11,20 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parser.h"
-#include "exec.h"
-#include "lexer.h"
-#include "../libft/libft.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/ioctl.h>
-#include <termios.h>
-#include "main_helpers.h"
 
 int	main(int argc, char **argv, char **envp)
 {

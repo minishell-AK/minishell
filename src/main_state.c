@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main_helpers.h"
+#include "minishell.h"
 
 static volatile sig_atomic_t	*exit_requested_slot(void)
 {

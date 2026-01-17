@@ -10,20 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "parser_heredoc_helpers.h"
 #include "minishell.h"
-#include "../libft/libft.h"
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <string.h>
-#include <errno.h>
-#include <readline/readline.h>
-#include <termios.h>
 /* helpers moved to parser_heredoc_helpers.c */
 
 char	*create_heredoc(t_token *delim_token, char **envp)

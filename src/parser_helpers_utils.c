@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "parser_helpers.h"
 #include "minishell.h"
-#include "../libft/libft.h"
-#include <stdlib.h>
 
 int	has_assignment(const char *s)
 {

@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "lexer_word_finalize_helpers.h"
-#include "../libft/libft.h"
-#include <stdlib.h>
-#include <string.h>
+#include "minishell.h"
 
 /* helper implementations moved to src/lexer_word_finalize_helpers.c */
 

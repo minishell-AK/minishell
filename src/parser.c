@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 static t_token	*dispatch_token(t_token *tk, t_cmd **head, t_cmd **cur,
 	char ***envp)

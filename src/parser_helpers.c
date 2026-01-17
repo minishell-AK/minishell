@@ -10,14 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "parser_helpers.h"
-#include "../libft/libft.h"
 #include "minishell.h"
-#include "lexer.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 t_token	*parse_word_token(t_token *tk, t_cmd **head, t_cmd **cur,
 		char ***envp)

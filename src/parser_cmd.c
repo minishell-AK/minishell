@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "parser_cmd_helpers.h"
-#include "../libft/libft.h"
 #include "minishell.h"
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
 /* helper implementations moved to src/parser_cmd_helpers.c */
 

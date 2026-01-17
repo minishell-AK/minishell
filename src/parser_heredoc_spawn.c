@@ -10,14 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "parser_heredoc_helpers.h"
 #include "minishell.h"
-#include "../libft/libft.h"
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <unistd.h>
 
 static void	heredoc_sigint(int sig)
 {

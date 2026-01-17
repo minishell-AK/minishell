@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "cleanup_state.h"
-#include <stdlib.h>
-#include <readline/history.h>
 
 static t_cleanup_state	*cleanup_state(void)
 {

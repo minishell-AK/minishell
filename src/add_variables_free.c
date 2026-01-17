@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "add_variables.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 void	free_string_array(char **arr)
 {

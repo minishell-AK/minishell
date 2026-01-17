@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "minishell.h"
-#include "ft_cd_helpers.h"
 
 int	ft_cd(char **args, char ***envp_ref)
 {

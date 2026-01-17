@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 static void	free_redirs(t_redir *r)
 {

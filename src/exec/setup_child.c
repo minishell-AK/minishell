@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
-#include "parser.h"
 #include "minishell.h"
 
 static void	process_redirections(t_redir **redir_ptr, int *fd_in, int *fd_out);

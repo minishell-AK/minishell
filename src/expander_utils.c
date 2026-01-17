@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "../libft/libft.h"
 #include "minishell.h"
-#include <stdlib.h>
-#include <string.h>
 
 int	expand_buf(t_exp *ctx, const char *str)
 {

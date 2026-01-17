@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "../libft/libft.h"
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include "minishell.h"
 
 int	build_tmp_name(char *name, pid_t pid, int seq)
 {

@@ -10,16 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "parser_heredoc_helpers.h"
 #include "minishell.h"
-#include "../libft/libft.h"
-#include <string.h>
-#include <signal.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
 int	install_sigint_ignore(struct sigaction *old_sa)
 {

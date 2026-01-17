@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "parser_heredoc_helpers.h"
-#include "../libft/libft.h"
-#include <unistd.h>
+#include "minishell.h"
 
 int	write_heredoc_entry(int fd, char *line, int expand, char **envp)
 {

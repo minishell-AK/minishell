@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_export.h"
-#include "../../../libft/libft.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "minishell.h"
 
 static void	sort_env_array(char **arr, int count)
 {

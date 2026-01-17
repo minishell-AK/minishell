@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+#include "minishell.h"
 
 int	append_word_token(const char *line, size_t start,
 					size_t end, t_token **head)

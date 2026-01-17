@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parser.h"
-#include "exec.h"
 
 int	get_fd(char *filename, int type)
 {

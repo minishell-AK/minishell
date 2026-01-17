@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "add_variables.h"
-#include "../libft/libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 char	*find_path_string(char **env)
 {

@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "lexer_word_finalize_helpers.h"
+#include "minishell.h"
 
 void	determine_token_flags(t_token *t, t_seg *segs)
 {

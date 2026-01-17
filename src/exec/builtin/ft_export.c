@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "minishell.h"
-#include "ft_export.h"
 
 int	ft_export(char **args, char ***envp_ref)
 {

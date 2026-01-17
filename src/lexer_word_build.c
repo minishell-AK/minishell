@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "lexer_word_finalize_helpers.h"
-#include "../libft/libft.h"
-#include <stdlib.h>
-#include <string.h>
+#include "minishell.h"
 
 size_t	calc_total_len(t_seg *segs)
 {

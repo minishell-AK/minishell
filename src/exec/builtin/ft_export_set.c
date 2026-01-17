@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_export.h"
-#include "../../../libft/libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 static int	is_valid_identifier(const char *str)
 {

@@ -10,17 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "../libft/libft.h"
 #include "minishell.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <errno.h>
-#include <readline/readline.h>
 
 static int	make_tmpfile_loop(pid_t pid, int *seq, char *out, size_t out_sz);
 

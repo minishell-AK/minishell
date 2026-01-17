@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "minishell.h"
-#include <stdlib.h>
 
 static void	shift_env_left(char **dst, char **src, int start, int count);
 
