@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 static int	make_tmpfile_loop(pid_t pid, int *seq, char *out, size_t out_sz);
 
 char	*read_trimmed_line(void)

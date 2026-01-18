@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 11:52:19 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/15 15:01:08 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/18 02:57:49 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/stat.h>
 
 static void	free_matrix(char **matrix)
 {
@@ -25,6 +26,15 @@ static void	free_matrix(char **matrix)
 	free(matrix);
 }
 
+static int	is_regular_file(const char *path)
+{
+	struct stat	buf;
+
+	if (stat(path, &buf) != 0)
+		return (0);
+	return (S_ISREG(buf.st_mode));
+}
+
 static char	*check_path_access(char *dir, char *cmd)
 {
 	char	*slash_path;
@@ -37,7 +47,7 @@ static char	*check_path_access(char *dir, char *cmd)
 	free(slash_path);
 	if (!full_path)
 		return (NULL);
-	if (access(full_path, F_OK | X_OK) == 0)
+	if (access(full_path, F_OK | X_OK) == 0 && is_regular_file(full_path))
 		return (full_path);
 	free(full_path);
 	return (NULL);
@@ -63,7 +73,7 @@ char	*find_path(char *cmd, char **env)
 
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, F_OK | X_OK) == 0)
+		if (access(cmd, F_OK | X_OK) == 0 && is_regular_file(cmd))
 			return (ft_strdup(cmd));
 		return (NULL);
 	}

@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 static void	free_out(char **out, size_t count)
 {
 	while (count--)

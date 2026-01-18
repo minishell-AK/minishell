@@ -1,0 +1,26 @@
+#!/bin/bash
+
+MINISHELL="/home/kakubo-l/kyoshi/minishell/minishell"
+
+echo "=== Teste 1: Comando . (ponto) ==="
+echo "." | $MINISHELL 2>&1 | grep -E "(command not found|execve error)"
+
+echo ""
+echo "=== Teste 2: Comando / (raiz) ==="
+echo "/" | $MINISHELL 2>&1 | grep -E "(command not found|execve error)"
+
+echo ""
+echo "=== Teste 3: Comando ./ls (caminho relativo) ==="
+echo "./ls" | $MINISHELL 2>&1 | grep -E "(command not found|execve error)"
+
+echo ""
+echo "=== Teste 4: Comando /bin/ls (caminho absoluto) ==="
+echo "/bin/ls" | $MINISHELL 2>&1 | head -3
+
+echo ""
+echo "=== Teste 5: Comando normal (ls) ==="
+echo "ls" | $MINISHELL 2>&1 | head -3
+
+echo ""
+echo "=== Teste 6: Diretório como comando (src) ==="
+echo "src" | $MINISHELL 2>&1 | grep -E "(command not found|execve error)"
