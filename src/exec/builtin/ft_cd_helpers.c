@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:50:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:41:25 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/19 11:14:21 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ int	set_env_pair(char ***envp_ref, const char *key, const char *value)
 		return (1);
 	idx = env_find_index(*envp_ref, key);
 	if (idx >= 0)
+	{
+		free((*envp_ref)[idx]);
 		(*envp_ref)[idx] = new_entry;
+	}
 	else
 		env_append_entry(envp_ref, new_entry);
 	return (0);

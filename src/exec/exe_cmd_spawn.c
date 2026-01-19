@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:54:30 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:43:35 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/19 11:14:21 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ static	void	exec_cmd_type(t_cmd *cuntent, char **env, t_all_variables *all)
 	int		exit_code;
 
 	if (!cuntent || !cuntent->args || !cuntent->args[0])
-		exit(0);
+	{
+		cleanup_child_and_exit(all, 0);
+	}
 	if (is_builtin(cuntent->args[0]))
 	{
 		exit_code = exec_builtin(cuntent, env, all);
-		free_all_variables(all);
-		exit(exit_code);
+		cleanup_child_and_exit(all, exit_code);
 	}
 	path = find_path(cuntent->args[0], env);
 	if (!path)
@@ -48,8 +49,7 @@ static	void	exec_cmd_type(t_cmd *cuntent, char **env, t_all_variables *all)
 	{
 		perror("execve error");
 		free(path);
-		free_all_variables(all);
-		exit(126);
+		cleanup_child_and_exit(all, 126);
 	}
 }
 
