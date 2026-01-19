@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 13:44:07 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/15 15:46:41 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/19 10:32:38 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ static int	get_exit_status(char **args, int last_status)
 		return (last_status);
 	if (!is_numeric(args[1]))
 	{
-		fprintf(stderr,
-			"minishell: exit: %s: numeric argument required\n",
-			args[1]);
+		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(args[1], STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 		return (255);
 	}
 	if (args[2])
 	{
-		fprintf(stderr, "minishell: exit: too many arguments\n");
+		ft_putstr_fd("minishell: exit: too many arguments\n",
+			STDERR_FILENO);
 		return (-1);
 	}
 	code = ft_atoi(args[1]);

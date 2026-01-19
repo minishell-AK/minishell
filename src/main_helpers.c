@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:58:18 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/16 19:26:14 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/19 10:32:38 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_all_variables	*prepare_execution(char *line, char ***envp_ref,
 	all = add_variables(cmd, envp_ref);
 	if (!all)
 	{
-		fprintf(stderr, "minishell: failed to prepare execution\n");
+		ft_putstr_fd("minishell: failed to prepare execution\n", STDERR_FILENO);
 		free_commands(cmd);
 	}
 	return (all);
