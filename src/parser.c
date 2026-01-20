@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 16:26:47 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:27 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 05:17:02 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ t_cmd	*parse_tokens(t_token *tokens, char ***envp)
 	{
 		tk = dispatch_token(tk, &head, &cur, envp);
 		if (!tk)
+		{
+			free_commands(head);
 			return (NULL);
+		}
 	}
 	return (head);
 }

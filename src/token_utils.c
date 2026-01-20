@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:04:12 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:40 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:23:40 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 
 t_token	*token_new(t_token_type type, const char *str)
 {
@@ -24,7 +25,7 @@ t_token	*token_new(t_token_type type, const char *str)
 	t->no_expand = 0;
 	t->in_double = 0;
 	t->segs = NULL;
-	if (str)
+	if (str && str[0] != '\0')
 	{
 		t->raw = ft_strdup(str);
 		if (!t->raw)
@@ -34,6 +35,7 @@ t_token	*token_new(t_token_type type, const char *str)
 		}
 	}
 	t->next = NULL;
+	(void)0;
 	return (t);
 }
 

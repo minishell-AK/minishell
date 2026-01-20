@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/16 19:16:36 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:39:20 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,52 @@ t_cmd	*cmd_new(void)
 	c->args = NULL;
 	c->redirs = NULL;
 	c->next = NULL;
+	(void)0;
 	return (c);
+}
+
+static char	**new_argv_with_arg(char **old, const char *arg)
+{
+	size_t	cnt;
+	char	**newargv;
+	char	*tmp;
+
+	cnt = 0;
+	if (old)
+	{
+		while (old[cnt])
+			cnt++;
+	}
+	tmp = ft_strdup(arg);
+	if (!tmp)
+		return (NULL);
+	newargv = malloc(sizeof(char *) * (cnt + 2));
+	if (!newargv)
+	{
+		free(tmp);
+		return (NULL);
+	}
+	if (old)
+		memcpy(newargv, old, sizeof(char *) * cnt);
+	newargv[cnt] = tmp;
+	newargv[cnt + 1] = NULL;
+	return (newargv);
 }
 
 int	add_arg(t_cmd *cmd, const char *arg)
 {
-	size_t	cnt;
 	char	**newargv;
+	char	**old;
 
 	if (!cmd)
 		return (-1);
-	cnt = 0;
-	if (cmd->args)
-	{
-		while (cmd->args[cnt])
-			cnt++;
-	}
-	newargv = malloc(sizeof(char *) * (cnt + 2));
+	newargv = new_argv_with_arg(cmd->args, arg);
 	if (!newargv)
 		return (-1);
-	if (cmd->args)
-		newargv = copy_old_args(newargv, cmd->args, cnt);
-	newargv[cnt] = ft_strdup(arg);
-	newargv[cnt + 1] = NULL;
+	old = cmd->args;
 	cmd->args = newargv;
+	if (old)
+		free(old);
 	return (0);
 }
 
@@ -69,12 +91,15 @@ int	add_redir(t_cmd *cmd, t_redir_type type, const char *target)
 		return (-1);
 	r->type = type;
 	r->file = ft_strdup(target);
+	if (!r->file)
+	{
+		free(r);
+		return (-1);
+	}
 	r->next = cmd->redirs;
 	cmd->redirs = r;
 	return (0);
 }
-
-/* helper implementations moved to src/parser_cmd_helpers.c */
 
 t_cmd	*ensure_cmd(t_cmd **head, t_cmd **cur)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 21:53:24 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/17 01:17:12 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:23:40 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	expand_segment(t_seg *seg, char **envp, int last_status)
 {
 	const char	*s;
 	char		*result;
+	char		*dup;
 
 	if (seg->type == SEG_SINGLE_QUOTED)
 		return ;
@@ -25,9 +26,17 @@ static void	expand_segment(t_seg *seg, char **envp, int last_status)
 	result = expand_line(s, envp, last_status);
 	if (!result)
 		return ;
-	free(seg->str);
-	seg->str = ft_strdup(result);
-	free(result);
+	{
+		dup = ft_strdup(result);
+		if (!dup)
+		{
+			free(result);
+			return ;
+		}
+		free(result);
+		free(seg->str);
+		seg->str = dup;
+	}
 }
 
 void	expand_tokens(t_token *head, char **envp, int last_status)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 18:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:45:49 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:08:25 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	rebuild_raw(t_token *tk)
 {
 	size_t	total;
 	t_seg	*it;
+	char	*newraw;
 
 	total = 0;
 	it = tk->segs;
@@ -53,15 +54,16 @@ void	rebuild_raw(t_token *tk)
 		total += strlen(it->str);
 		it = it->next;
 	}
-	free(tk->raw);
-	tk->raw = malloc(total + 1);
-	if (!tk->raw)
+	newraw = malloc(total + 1);
+	if (!newraw)
 		return ;
-	tk->raw[0] = '\0';
+	newraw[0] = '\0';
 	it = tk->segs;
 	while (it)
 	{
-		ft_strlcat(tk->raw, it->str, total + 1);
+		ft_strlcat(newraw, it->str, total + 1);
 		it = it->next;
 	}
+	free(tk->raw);
+	tk->raw = newraw;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_finalize_helpers.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:57:46 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:46:17 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 07:09:58 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	finalize_empty_token(t_token **head)
 {
 	t_token	*t;
 
-	t = token_new(TOK_WORD, "");
+	t = token_new(TOK_WORD, NULL);
 	if (!t)
 		return (-1);
 	token_append(head, t);

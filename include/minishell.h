@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/17 04:23:44 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:10:21 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	free_envp(char **envp);
 void	register_envp_ref(char ***envp_ref);
 void	unregister_envp_ref(void);
 void	cleanup_and_exit(int status);
+/* instrumentation removed for production build */
 int		is_space_char(int c);
 int		env_append_entry(char ***envp_ref, char *entry);
 int		env_find_index(char **envp, const char *name);

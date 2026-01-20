@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:04:01 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:43:44 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 06:09:59 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	exec_cmd(t_all_variables *all_variables)
 	{
 		code = exec_builtin(all_variables->cmd,
 				all_variables->env, all_variables);
-		free_all_variables(all_variables);
 		return (code);
 	}
 	spawn_children(all_variables);
@@ -47,6 +46,5 @@ int	exec_cmd(t_all_variables *all_variables)
 	last_status = waint_all_pids(all_variables->pids,
 			size_list_cmd(all_variables->cmd));
 	restore_foreground();
-	free_all_variables(all_variables);
 	return (last_status);
 }

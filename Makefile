@@ -64,7 +64,7 @@ SRCS = \
 	src/size_list.c \
 	src/token_utils.c \
 	src/utils_alloc.c \
-	src/utils_char.c
+	src/utils_char.c \
 
 OBJ_DIR = objs
 OBJS = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRCS))

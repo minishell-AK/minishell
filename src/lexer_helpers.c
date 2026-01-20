@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helpers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:58:01 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/12/18 19:11:51 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:08:26 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ int	append_word_token(const char *line, size_t start,
 		return (-1);
 	memcpy(raw, line + start, end - start);
 	raw[end - start] = '\0';
-	t = token_new(TOK_WORD, raw);
-	free(raw);
+	t = token_new(TOK_WORD, NULL);
 	if (!t)
+	{
+		free(raw);
 		return (-1);
+	}
+	t->raw = raw;
 	token_append(head, t);
 	return (0);
 }
@@ -36,9 +39,15 @@ static int	make_and_append(t_token **head, t_token_type type,
 {
 	t_token	*t;
 
-	t = token_new(type, s);
+	t = token_new(type, NULL);
 	if (!t)
-		return (0);
+		return (-1);
+	t->raw = ft_strdup(s);
+	if (!t->raw)
+	{
+		free(t);
+		return (-1);
+	}
 	token_append(head, t);
 	*i += strlen(s);
 	return (1);

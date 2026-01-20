@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_io.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:00:12 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:48:28 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:23:40 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,16 @@ char	*read_heredoc_lines(const char *delimiter, int expand, char **envp)
 	fd = open_unique_tmpfile(template, sizeof(template));
 	if (fd == -1)
 		return (NULL);
+	close(fd);
 	ctx.delimiter = delimiter;
 	ctx.expand = expand;
 	ctx.envp = envp;
 	ctx.template = template;
-	res = spawn_heredoc_reader(fd, &ctx);
+	res = spawn_heredoc_reader(template, &ctx);
 	if (res == -1)
 	{
-		close(fd);
 		unlink(template);
 		return (NULL);
 	}
-	close(fd);
 	return (ft_strdup(template));
 }

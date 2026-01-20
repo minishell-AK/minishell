@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_all_variables.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 13:52:08 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/17 01:10:34 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 06:09:59 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	free_redirs(t_redir *r)
-{
-	t_redir	*tmp;
-
-	while (r)
-	{
-		tmp = r->next;
-		if (r->file)
-			free(r->file);
-		free(r);
-		r = tmp;
-	}
-}
 
 static void	free_string_array(char **arr)
 {
@@ -41,38 +27,6 @@ static void	free_string_array(char **arr)
 	free(arr);
 }
 
-static void	free_args(char **args)
-{
-	size_t	i;
-
-	if (!args)
-		return ;
-	i = 0;
-	while (args[i])
-	{
-		free(args[i]);
-		i++;
-	}
-	free(args);
-}
-
-void	free_all_commands(t_cmd *cmds)
-{
-	t_cmd	*c;
-	t_cmd	*tmp;
-
-	c = cmds;
-	while (c)
-	{
-		tmp = c->next;
-		if (c->args)
-			free_args(c->args);
-		free_redirs(c->redirs);
-		free(c);
-		c = tmp;
-	}
-}
-
 void	free_all_variables(t_all_variables *all_variables)
 {
 	if (!all_variables)
@@ -84,6 +38,6 @@ void	free_all_variables(t_all_variables *all_variables)
 	if (all_variables->pids)
 		free(all_variables->pids);
 	if (all_variables->cmd)
-		free_all_commands(all_variables->cmd);
+		free_commands(all_variables->cmd);
 	free(all_variables);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 19:30:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:42:38 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 09:52:30 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ void	free_seg_list(t_seg *segs)
 	while (it)
 	{
 		n = it->next;
-		free(it->str);
+		if (it->str)
+		{
+			free(it->str);
+		}
 		free(it);
 		it = n;
 	}

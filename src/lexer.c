@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:03:07 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/17 01:09:59 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:23:40 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@ static int	handle_pipe(const char *line, size_t *i, t_token **head)
 
 	if (line[*i] == '|')
 	{
-		t = token_new(TOK_PIPE, "|");
+		t = token_new(TOK_PIPE, NULL);
 		if (!t)
-			return (0);
+			return (-1);
+		t->raw = ft_strdup("|");
+		if (!t->raw)
+		{
+			free(t);
+			return (-1);
+		}
 		token_append(head, t);
 		(*i)++;
 		return (1);
@@ -31,9 +37,17 @@ static int	handle_pipe(const char *line, size_t *i, t_token **head)
 static int	handle_metachar(const char *line, size_t *i, size_t len,
 	t_token **head)
 {
-	if (handle_pipe(line, i, head))
+	int	ret;
+
+	ret = handle_pipe(line, i, head);
+	if (ret == -1)
+		return (-1);
+	if (ret == 1)
 		return (1);
-	if (handle_redir(line, i, len, head))
+	ret = handle_redir(line, i, len, head);
+	if (ret == -1)
+		return (-1);
+	if (ret == 1)
 		return (1);
 	return (0);
 }
@@ -48,6 +62,23 @@ static t_token	*lexer_tokenize_core(const char *line, size_t len)
 
 	i = 0;
 	head = NULL;
+	if (tokenize_fill(line, len, &head) == -1)
+	{
+		token_free_all(head);
+		return (NULL);
+	}
+	end_tok = token_new(TOK_END, NULL);
+	if (end_tok)
+		token_append(&head, end_tok);
+	return (head);
+}
+
+static int	tokenize_fill(const char *line, size_t len, t_token **head)
+{
+	size_t	i;
+	int	hm;
+
+	i = 0;
 	while (i < len)
 	{
 		if (is_space_char((unsigned char)line[i]))
@@ -55,15 +86,17 @@ static t_token	*lexer_tokenize_core(const char *line, size_t len)
 			i++;
 			continue ;
 		}
-		if (handle_metachar(line, &i, len, &head))
-			continue ;
-		if (collect_word(line, &i, len, &head) != 0)
-			return (head);
+		{
+			hm = handle_metachar(line, &i, len, head);
+			if (hm == -1)
+				return (-1);
+			if (hm == 1)
+				continue ;
+		}
+		if (collect_word(line, &i, len, head) != 0)
+			return (-1);
 	}
-	end_tok = token_new(TOK_END, "");
-	if (end_tok)
-		token_append(&head, end_tok);
-	return (head);
+	return (0);
 }
 
 t_token	*lexer_tokenize(const char *line)

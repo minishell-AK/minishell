@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 18:40:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:47:00 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:39:20 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,24 @@ static int	handle_quoted(t_word_ctx *ctx, size_t *i)
 	return (0);
 }
 
+static int	collect_word_core(t_word_ctx *ctx, size_t *i, size_t len)
+{
+	while (*i < len)
+	{
+		if (ctx->line[*i] == '\'' || ctx->line[*i] == '"')
+		{
+			if (handle_quoted(ctx, i) < 0)
+				return (-1);
+			continue ;
+		}
+		if (should_break(ctx->line, *i))
+			break ;
+		if (collect_unquoted(ctx, i) < 0)
+			return (-1);
+	}
+	return (0);
+}
+
 int	collect_word(const char *line, size_t *i, size_t len, t_token **head)
 {
 	t_seg		*segs;
@@ -45,18 +63,10 @@ int	collect_word(const char *line, size_t *i, size_t len, t_token **head)
 	ctx.len = len;
 	ctx.segs = &segs;
 	ctx.last = &last;
-	while (*i < len)
+	if (collect_word_core(&ctx, i, len) < 0)
 	{
-		if (line[*i] == '\'' || line[*i] == '"')
-		{
-			if (handle_quoted(&ctx, i) < 0)
-				return (-1);
-			continue ;
-		}
-		if (should_break(line, *i))
-			break ;
-		if (collect_unquoted(&ctx, i) < 0)
-			return (-1);
+		free_seg_list(segs);
+		return (-1);
 	}
 	return (finalize_token(segs, head));
 }

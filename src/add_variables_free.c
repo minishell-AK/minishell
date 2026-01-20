@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_variables_free.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:55:10 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:44:25 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 09:43:21 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	free_vars_and_arrays(t_all_variables *vars)
 {
 	if (!vars)
 		return ;
+	if (vars->cmd)
+		free_commands(vars->cmd);
 	if (vars->path)
 		free_string_array(vars->path);
 	if (vars->env)

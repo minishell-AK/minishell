@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 19:05:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:43:21 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 09:52:30 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static void	free_redirs(t_redir *r)
 	{
 		tmp = r->next;
 		if (r->file)
+		{
 			free(r->file);
+		}
 		free(r);
 		r = tmp;
 	}

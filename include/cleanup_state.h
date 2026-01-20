@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_state.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 00:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/17 01:32:13 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:12:48 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ typedef struct s_cleanup_state
 {
 	char	***envp_ref;
 	int		atexit_registered;
-}t_cleanup_state;
+}	t_cleanup_state;
 
 #endif

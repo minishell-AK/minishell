@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_finalize.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 19:30:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:46:29 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:25:32 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ int	finalize_token(t_seg *segs, t_token **head)
 	set_token_flags(t, segs);
 	len = calc_total_len(segs);
 	if (build_raw_string(t, segs, len) < 0)
+	{
+		free_seg_list(segs);
+		free(t);
 		return (-1);
+	}
 	token_append(head, t);
 	return (0);
 }

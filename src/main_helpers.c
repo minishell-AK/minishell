@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_helpers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:58:18 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 10:47:15 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 08:47:04 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	process_line(char *line, char ***envp_ref, int last_status)
 		return (exit_status);
 	}
 	last_status = exec_cmd(all);
+	free_all_variables(all);
 	return (last_status);
 }
 

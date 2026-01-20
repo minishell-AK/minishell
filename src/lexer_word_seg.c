@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_seg.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 19:20:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/06 18:42:33 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 09:47:30 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_seg	*create_node(const char *src, size_t len, t_seg_type type)
 	node->type = type;
 	node->str = s;
 	node->next = NULL;
+	(void)0;
 	return (node);
 }
 
