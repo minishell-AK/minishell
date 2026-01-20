@@ -6,20 +6,12 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:00:23 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/20 11:13:24 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/20 11:26:10 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <limits.h>
-
-static void	heredoc_sigint(int sig)
-{
-	(void)sig;
-	rl_free_line_state();
-	rl_cleanup_after_signal();
-	_exit(130);
-}
 
 static void	exec_heredoc_child(const char *template, t_hdoc_ctx *ctx)
 {

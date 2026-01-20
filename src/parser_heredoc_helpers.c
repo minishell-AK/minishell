@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:00:00 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/20 11:08:26 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/20 11:26:18 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ void	set_expand_str(char *expand_str, int expand)
 	else
 		expand_str[0] = '0';
 	expand_str[1] = '\0';
+}
+
+static void	heredoc_sigint(int sig)
+{
+	(void)sig;
+	rl_free_line_state();
+	rl_cleanup_after_signal();
+	_exit(130);
 }
 
 void	heredoc_setup_signals(void)

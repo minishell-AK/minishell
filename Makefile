@@ -56,6 +56,7 @@ SRCS = \
 	src/parser_heredoc.c \
 	src/parser_heredoc_io.c \
 	src/parser_heredoc_spawn.c \
+	src/parser_heredoc_helpers.c \
 	src/parser_heredoc_tmp.c \
 	src/parser_heredoc_utils.c \
 	src/parser_heredoc_wait.c \

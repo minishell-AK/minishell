@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:03:07 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/20 11:23:40 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/20 11:25:43 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,12 @@ static int	handle_metachar(const char *line, size_t *i, size_t len,
 
 /* helpers moved to lexer_helpers.c to respect Norminette function limits */
 
+static int	tokenize_fill(const char *line, size_t len, t_token **head);
+
 static t_token	*lexer_tokenize_core(const char *line, size_t len)
 {
-	size_t	i;
 	t_token	*head;
 	t_token	*end_tok;
-
-	i = 0;
 	head = NULL;
 	if (tokenize_fill(line, len, &head) == -1)
 	{
