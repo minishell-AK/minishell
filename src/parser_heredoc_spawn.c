@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:00:23 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/20 11:26:10 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/20 21:16:16 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static void	exec_heredoc_child(const char *template, t_hdoc_ctx *ctx)
 
 int	spawn_heredoc_reader(const char *template, t_hdoc_ctx *ctx)
 {
-	pid_t	pid;
-	int	status;
+	pid_t				pid;
+	int					status;
 	struct sigaction	old_sa;
 
 	if (install_sigint_ignore(&old_sa) == -1)
@@ -63,9 +63,9 @@ int	spawn_heredoc_reader(const char *template, t_hdoc_ctx *ctx)
 int	heredoc_child_exec_main(const char *template, const char *delimiter,
 	signed int expand, char **envp)
 {
-	int	fd;
+	int			fd;
 	t_hdoc_ctx	ctx;
-	int	rc;
+	int			rc;
 
 	fd = open(template, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR);
 	if (fd == -1)

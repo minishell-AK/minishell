@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:03:07 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/20 11:25:43 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/20 21:15:38 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static t_token	*lexer_tokenize_core(const char *line, size_t len)
 {
 	t_token	*head;
 	t_token	*end_tok;
+
 	head = NULL;
 	if (tokenize_fill(line, len, &head) == -1)
 	{
@@ -75,7 +76,7 @@ static t_token	*lexer_tokenize_core(const char *line, size_t len)
 static int	tokenize_fill(const char *line, size_t len, t_token **head)
 {
 	size_t	i;
-	int	hm;
+	int		hm;
 
 	i = 0;
 	while (i < len)
