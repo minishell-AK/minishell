@@ -1,0 +1,6 @@
+minishell$ ls > f > f2>f3>f4 --> isso não é erro de sintaxe
+< t skdfvb | ls | cat -e > f10
+tratar redirects que dão errado
+ls | | ls --> isso é erro de sintaxe
+sinal control + \ no heredoc
+

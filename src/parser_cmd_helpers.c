@@ -21,20 +21,7 @@ char	**copy_old_args(char **newargv, char **oldargs, size_t cnt)
 
 int	reject_multiple_out_redirs(t_cmd *cmd)
 {
-	t_redir		*it;
-	const char	*msg;
-
-	it = cmd->redirs;
-	msg = "minishell: syntax error: multiple output redirections\n";
-	while (it)
-	{
-		if (it->type == REDIR_OUT || it->type == APPEND)
-		{
-			ft_putstr_fd(msg, STDOUT_FILENO);
-			ft_putstr_fd(msg, 2);
-			return (-1);
-		}
-		it = it->next;
-	}
+	(void)cmd;
+	/* Allow multiple output redirections; shell semantics: last wins. */
 	return (0);
 }

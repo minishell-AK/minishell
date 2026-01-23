@@ -96,8 +96,16 @@ int	add_redir(t_cmd *cmd, t_redir_type type, const char *target)
 		free(r);
 		return (-1);
 	}
-	r->next = cmd->redirs;
-	cmd->redirs = r;
+	r->next = NULL;
+	if (!cmd->redirs)
+		cmd->redirs = r;
+	else
+	{
+		t_redir *it = cmd->redirs;
+		while (it->next)
+			it = it->next;
+		it->next = r;
+	}
 	return (0);
 }
 

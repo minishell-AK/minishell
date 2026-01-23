@@ -92,7 +92,8 @@ $(LIBFT_A):
 
 
 valgrind: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPP_FILE) ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all  --track-fds=yes --trace-children=yes --trace-children-skip='/bin/,/sbin/,/usr/bin/*' --suppressions=$(SUPP_FILE) -q ./$(NAME)
+
 
 clean:
 	@rm -rf $(OBJ_DIR)
