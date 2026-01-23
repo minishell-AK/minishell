@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:58:43 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/21 11:12:09 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/23 15:44:49 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ int	main(int argc, char **argv, char **envp)
 	register_envp_ref(&my_env);
 	set_locale_c(&my_env);
 	setup_terminal_pgrp();
+	rl_bind_key('\t', (int (*)())rl_insert);
 	last_status = run_shell_loop(&my_env);
 	rl_clear_history();
 	free_envp(my_env);
 	unregister_envp_ref();
 	return (last_status);
 }
-
-/* helper implementations moved to src/main_helpers.c */
