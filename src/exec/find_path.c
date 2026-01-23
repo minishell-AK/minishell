@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 11:52:19 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/18 02:57:49 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/23 13:17:35 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,20 @@ static char	*check_path_access(char *dir, char *cmd)
 	return (NULL);
 }
 
-static char	**get_paths_from_env(char **env)
+static char	*get_and_search_paths(char **env, char *cmd)
 {
 	int		i;
+	char	**paths;
+	char	*final_path;
 
 	i = 0;
 	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;
 	if (!env[i])
 		return (NULL);
-	return (ft_split(env[i] + 5, ':'));
-}
-
-char	*find_path(char *cmd, char **env)
-{
-	char	**paths;
-	char	*final_path;
-	int		i;
-
-	if (ft_strchr(cmd, '/'))
-	{
-		if (access(cmd, F_OK | X_OK) == 0 && is_regular_file(cmd))
-			return (ft_strdup(cmd));
+	paths = ft_split(env[i] + 5, ':');
+	if (!paths)
 		return (NULL);
-	}
-	paths = get_paths_from_env(env);
 	i = 0;
 	while (paths[i])
 	{
@@ -91,4 +80,15 @@ char	*find_path(char *cmd, char **env)
 	}
 	free_matrix(paths);
 	return (NULL);
+}
+
+char	*find_path(char *cmd, char **env)
+{
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, F_OK | X_OK) == 0 && is_regular_file(cmd))
+			return (ft_strdup(cmd));
+		return (NULL);
+	}
+	return (get_and_search_paths(env, cmd));
 }
