@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:00:23 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/23 18:27:04 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:44:56 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	spawn_heredoc_reader(const char *template, t_hdoc_ctx *ctx)
 	{
 		return (-1);
 	}
-	/* ignore SIGQUIT in parent while spawning heredoc child to avoid
-	   the child being killed before it sets its own handlers */
 	memset(&ign_quit, 0, sizeof(ign_quit));
 	ign_quit.sa_handler = SIG_IGN;
 	sigemptyset(&ign_quit.sa_mask);
@@ -71,7 +69,6 @@ int	spawn_heredoc_reader(const char *template, t_hdoc_ctx *ctx)
 		exec_heredoc_child(template, ctx);
 	}
 	status = handle_heredoc_wait(pid, &old_sa);
-	/* restore parent's SIGQUIT disposition */
 	sigaction(SIGQUIT, &old_quit_sa, NULL);
 	return (status);
 }

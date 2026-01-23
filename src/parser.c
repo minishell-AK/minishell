@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 16:26:47 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/21 11:13:43 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:42:37 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_cmd	*parse_tokens(t_token *tokens, char ***envp)
 		tk = dispatch_token(tk, &head, &cur, envp);
 		if (!tk)
 		{
-			free_commands(head);
 			return (NULL);
 		}
 	}

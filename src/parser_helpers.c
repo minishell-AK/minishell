@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/16 19:06:40 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:42:01 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ t_token	*parse_pipe_token(t_token *tk, t_cmd **head, t_cmd **cur)
 	if (!*cur)
 	{
 		ft_putendl_fd("parse error: pipe with no command before", 2);
+		free_commands(*head);
+		return (NULL);
+	}
+	if (!(*cur)->args && !(*cur)->redirs)
+	{
+		ft_putendl_fd("syntax error near unexpected token '|'", 2);
 		free_commands(*head);
 		return (NULL);
 	}

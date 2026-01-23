@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 11:12:38 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/23 18:27:41 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:44:17 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ void	set_expand_str(char *expand_str, int expand)
 static void	heredoc_sigint(int sig)
 {
 	(void)sig;
-	/* Do not write a newline here — parent will print/handle the prompt
-	   restore to avoid duplicate blank lines on Ctrl+C */
 	_exit(130);
 }
+
 void	heredoc_setup_signals(void)
 {
 	signal(SIGINT, heredoc_sigint);

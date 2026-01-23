@@ -6,13 +6,11 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/23 17:10:27 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/23 19:09:19 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* helper implementations moved to src/parser_cmd_helpers.c */
 
 t_cmd	*cmd_new(void)
 {
@@ -26,36 +24,22 @@ t_cmd	*cmd_new(void)
 	c->args = NULL;
 	c->redirs = NULL;
 	c->next = NULL;
-	(void)0;
 	return (c);
 }
 
-static char	**new_argv_with_arg(char **old, const char *arg)
+static void	append_redir_to_list(t_cmd *cmd, t_redir *r)
 {
-	size_t	cnt;
-	char	**newargv;
-	char	*tmp;
+	t_redir	*it;
 
-	cnt = 0;
-	if (old)
+	if (!cmd->redirs)
 	{
-		while (old[cnt])
-			cnt++;
+		cmd->redirs = r;
+		return ;
 	}
-	tmp = ft_strdup(arg);
-	if (!tmp)
-		return (NULL);
-	newargv = malloc(sizeof(char *) * (cnt + 2));
-	if (!newargv)
-	{
-		free(tmp);
-		return (NULL);
-	}
-	if (old)
-		memcpy(newargv, old, sizeof(char *) * cnt);
-	newargv[cnt] = tmp;
-	newargv[cnt + 1] = NULL;
-	return (newargv);
+	it = cmd->redirs;
+	while (it->next)
+		it = it->next;
+	it->next = r;
 }
 
 int	add_arg(t_cmd *cmd, const char *arg)
@@ -97,15 +81,7 @@ int	add_redir(t_cmd *cmd, t_redir_type type, const char *target)
 		return (-1);
 	}
 	r->next = NULL;
-	if (!cmd->redirs)
-		cmd->redirs = r;
-	else
-	{
-		t_redir *it = cmd->redirs;
-		while (it->next)
-			it = it->next;
-		it->next = r;
-	}
+	append_redir_to_list(cmd, r);
 	return (0);
 }
 
