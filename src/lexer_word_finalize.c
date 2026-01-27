@@ -6,13 +6,11 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 19:30:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/21 11:10:02 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/26 03:48:45 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* helper implementations moved to src/lexer_word_finalize_helpers.c */
 
 int	finalize_token(t_seg *segs, t_token **head)
 {

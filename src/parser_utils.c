@@ -38,6 +38,10 @@ void	free_commands(t_cmd *cmds)
 	while (c)
 	{
 		tmp = c->next;
+		if (c->pipein > 2)
+			close(c->pipein);
+		if (c->pipeout > 2)
+			close(c->pipeout);
 		if (c->args)
 		{
 			i = 0;

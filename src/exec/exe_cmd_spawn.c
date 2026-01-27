@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+
+
 void	handle_wait_status(int status, int *last_status, int *seen_sigint)
 {
 	if (WIFEXITED(status))
@@ -89,9 +91,36 @@ int	spawn_children(t_all_variables *all_variables)
 		else if (all_variables->pids[i] > 0)
 		{
 			set_child_pgrp(i, all_variables);
+			if (cuntent->pipein > 2)
+			{
+				close(cuntent->pipein);
+				cuntent->pipein = -1;
+			}
+			if (cuntent->pipeout > 2)
+			{
+				close(cuntent->pipeout);
+				cuntent->pipeout = -1;
+			}
 		}
 		cuntent = cuntent->next;
 		i++;
 	}
+	/* Ensure no pipe fds remain open in parent */
+	cuntent = all_variables->cmd;
+	while (cuntent != NULL)
+	{
+		if (cuntent->pipein > 2)
+		{
+			close(cuntent->pipein);
+			cuntent->pipein = -1;
+		}
+		if (cuntent->pipeout > 2)
+		{
+			close(cuntent->pipeout);
+			cuntent->pipeout = -1;
+		}
+		cuntent = cuntent->next;
+	}
 	return (i);
 }
+

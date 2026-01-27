@@ -1,0 +1,135 @@
+==475353== Memcheck, a memory error detector
+==475353== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==475353== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==475353== Command: ./minishell
+==475353== Parent PID: 469963
+==475353== 
+==475361== 
+==475361== FILE DESCRIPTORS: 12 open (3 std) at exit.
+==475361== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==475361==    <inherited from parent>
+==475361== 
+==475361== Open file descriptor 48: /dev/ptmx
+==475361==    <inherited from parent>
+==475361== 
+==475361== Open file descriptor 47: /dev/ptmx
+==475361==    <inherited from parent>
+==475361== 
+==475361== Open file descriptor 46: /dev/ptmx
+==475361==    <inherited from parent>
+==475361== 
+==475361== Open AF_UNIX socket 45: <unknown>
+==475361==    <inherited from parent>
+==475361== 
+==475361== Open file descriptor 44: /home/kakubo-l/.config/Code/logs/20260126T034437/ptyhost.log
+==475361==    <inherited from parent>
+==475361== 
+==475361== Open pf-16 socket 37:
+==475361==    <inherited from parent>
+==475361== 
+==475361== Open file descriptor 36:
+==475361==    <inherited from parent>
+==475361== 
+==475361== Open file descriptor 3: /home/kakubo-l/kyoshi/minishell/valgrind_fix.txt
+==475361==    <inherited from parent>
+==475361== 
+==475361== 
+==475361== HEAP SUMMARY:
+==475361==     in use at exit: 191,773 bytes in 218 blocks
+==475361==   total heap usage: 673 allocs, 455 frees, 219,152 bytes allocated
+==475361== 
+==475361== LEAK SUMMARY:
+==475361==    definitely lost: 0 bytes in 0 blocks
+==475361==    indirectly lost: 0 bytes in 0 blocks
+==475361==      possibly lost: 0 bytes in 0 blocks
+==475361==    still reachable: 0 bytes in 0 blocks
+==475361==         suppressed: 191,773 bytes in 218 blocks
+==475361== 
+==475361== For lists of detected and suppressed errors, rerun with: -s
+==475361== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==475362== 
+==475362== FILE DESCRIPTORS: 12 open (3 std) at exit.
+==475362== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==475362==    <inherited from parent>
+==475362== 
+==475362== Open file descriptor 48: /dev/ptmx
+==475362==    <inherited from parent>
+==475362== 
+==475362== Open file descriptor 47: /dev/ptmx
+==475362==    <inherited from parent>
+==475362== 
+==475362== Open file descriptor 46: /dev/ptmx
+==475362==    <inherited from parent>
+==475362== 
+==475362== Open AF_UNIX socket 45: <unknown>
+==475362==    <inherited from parent>
+==475362== 
+==475362== Open file descriptor 44: /home/kakubo-l/.config/Code/logs/20260126T034437/ptyhost.log
+==475362==    <inherited from parent>
+==475362== 
+==475362== Open pf-16 socket 37:
+==475362==    <inherited from parent>
+==475362== 
+==475362== Open file descriptor 36:
+==475362==    <inherited from parent>
+==475362== 
+==475362== Open file descriptor 3: /home/kakubo-l/kyoshi/minishell/valgrind_fix.txt
+==475362==    <inherited from parent>
+==475362== 
+==475362== 
+==475362== HEAP SUMMARY:
+==475362==     in use at exit: 191,772 bytes in 218 blocks
+==475362==   total heap usage: 825 allocs, 607 frees, 225,883 bytes allocated
+==475362== 
+==475362== LEAK SUMMARY:
+==475362==    definitely lost: 0 bytes in 0 blocks
+==475362==    indirectly lost: 0 bytes in 0 blocks
+==475362==      possibly lost: 0 bytes in 0 blocks
+==475362==    still reachable: 0 bytes in 0 blocks
+==475362==         suppressed: 191,772 bytes in 218 blocks
+==475362== 
+==475362== For lists of detected and suppressed errors, rerun with: -s
+==475362== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==475353== 
+==475353== FILE DESCRIPTORS: 12 open (3 std) at exit.
+==475353== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==475353==    <inherited from parent>
+==475353== 
+==475353== Open file descriptor 48: /dev/ptmx
+==475353==    <inherited from parent>
+==475353== 
+==475353== Open file descriptor 47: /dev/ptmx
+==475353==    <inherited from parent>
+==475353== 
+==475353== Open file descriptor 46: /dev/ptmx
+==475353==    <inherited from parent>
+==475353== 
+==475353== Open AF_UNIX socket 45: <unknown>
+==475353==    <inherited from parent>
+==475353== 
+==475353== Open file descriptor 44: /home/kakubo-l/.config/Code/logs/20260126T034437/ptyhost.log
+==475353==    <inherited from parent>
+==475353== 
+==475353== Open pf-16 socket 37:
+==475353==    <inherited from parent>
+==475353== 
+==475353== Open file descriptor 36:
+==475353==    <inherited from parent>
+==475353== 
+==475353== Open file descriptor 3: /home/kakubo-l/kyoshi/minishell/valgrind_fix.txt
+==475353==    <inherited from parent>
+==475353== 
+==475353== 
+==475353== HEAP SUMMARY:
+==475353==     in use at exit: 191,711 bytes in 217 blocks
+==475353==   total heap usage: 773 allocs, 556 frees, 223,978 bytes allocated
+==475353== 
+==475353== LEAK SUMMARY:
+==475353==    definitely lost: 0 bytes in 0 blocks
+==475353==    indirectly lost: 0 bytes in 0 blocks
+==475353==      possibly lost: 0 bytes in 0 blocks
+==475353==    still reachable: 0 bytes in 0 blocks
+==475353==         suppressed: 191,711 bytes in 217 blocks
+==475353== 
+==475353== For lists of detected and suppressed errors, rerun with: -s
+==475353== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

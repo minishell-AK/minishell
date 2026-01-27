@@ -1,0 +1,2 @@
+minishell$ < t skdfvb | ls | cat -e > f10
+minishell$ exit

@@ -38,6 +38,9 @@ int	exec_cmd(t_all_variables *all_variables)
 	{
 		code = exec_builtin(all_variables->cmd,
 				all_variables->env, all_variables);
+
+		/* close pipes created by add_pipe since no children will be spawned */
+		close_all_pipes(all_variables->cmd);
 		return (code);
 	}
 	spawn_children(all_variables);

@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:00:23 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/23 18:44:56 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/26 03:54:06 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,38 +36,54 @@ static void	exec_heredoc_child(const char *template, t_hdoc_ctx *ctx)
 	_exit(127);
 }
 
+static int	install_sigquit_ignore(struct sigaction *old_quit_sa)
+{
+	struct sigaction	ign_quit;
+
+	memset(&ign_quit, 0, sizeof(ign_quit));
+	ign_quit.sa_handler = SIG_IGN;
+	sigemptyset(&ign_quit.sa_mask);
+	ign_quit.sa_flags = 0;
+	if (sigaction(SIGQUIT, &ign_quit, old_quit_sa) == -1)
+		return (-1);
+	return (0);
+}
+
+static pid_t	spawn_heredoc_fork(const char *template, t_hdoc_ctx *ctx,
+						struct sigaction *old_sa,
+						struct sigaction *old_quit_sa)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		sigaction(SIGINT, old_sa, NULL);
+		sigaction(SIGQUIT, old_quit_sa, NULL);
+		return (-1);
+	}
+	if (pid == 0)
+		exec_heredoc_child(template, ctx);
+	return (pid);
+}
+
 int	spawn_heredoc_reader(const char *template, t_hdoc_ctx *ctx)
 {
 	pid_t				pid;
 	int					status;
 	struct sigaction	old_sa;
 	struct sigaction	old_quit_sa;
-	struct sigaction	ign_quit;
 
 	if (install_sigint_ignore(&old_sa) == -1)
-	{
 		return (-1);
-	}
-	memset(&ign_quit, 0, sizeof(ign_quit));
-	ign_quit.sa_handler = SIG_IGN;
-	sigemptyset(&ign_quit.sa_mask);
-	ign_quit.sa_flags = 0;
-	if (sigaction(SIGQUIT, &ign_quit, &old_quit_sa) == -1)
+	if (install_sigquit_ignore(&old_quit_sa) == -1)
 	{
 		sigaction(SIGINT, &old_sa, NULL);
 		return (-1);
 	}
-	pid = fork();
+	pid = spawn_heredoc_fork(template, ctx, &old_sa, &old_quit_sa);
 	if (pid == -1)
-	{
-		sigaction(SIGINT, &old_sa, NULL);
-		sigaction(SIGQUIT, &old_quit_sa, NULL);
 		return (-1);
-	}
-	if (pid == 0)
-	{
-		exec_heredoc_child(template, ctx);
-	}
 	status = handle_heredoc_wait(pid, &old_sa);
 	sigaction(SIGQUIT, &old_quit_sa, NULL);
 	return (status);
