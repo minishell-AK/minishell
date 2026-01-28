@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/21 10:43:03 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 22:54:47 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ t_token	*parse_redir_token(t_token *tk, t_cmd **head, t_cmd **cur,
 		return (NULL);
 	target = get_redir_target(rt, next, envp);
 	if (!target)
+	{
+		free_commands(*head);
 		return (NULL);
+	}
 	if (process_redir(cur, rt, target) == -1)
 	{
 		free(target);

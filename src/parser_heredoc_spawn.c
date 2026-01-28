@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:00:23 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/26 03:54:06 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 22:43:12 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	exec_heredoc_child(const char *template, t_hdoc_ctx *ctx)
 	argv_child[4] = expand_str;
 	argv_child[5] = NULL;
 	execve(exe_path, argv_child, ctx->envp);
-	_exit(127);
+	exit(127);
 }
 
 static int	install_sigquit_ignore(struct sigaction *old_quit_sa)
@@ -96,9 +96,11 @@ int	heredoc_child_exec_main(const char *template, const char *delimiter,
 	t_hdoc_ctx	ctx;
 	int			rc;
 
-	fd = open(template, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR);
+	fd = open(template, O_CREAT | O_TRUNC | O_WRONLY | O_CLOEXEC,
+			S_IRUSR | S_IWUSR);
 	if (fd == -1)
-		_exit(1);
+		exit(1);
+	register_heredoc(fd, template);
 	heredoc_setup_signals();
 	ctx.delimiter = delimiter;
 	ctx.expand = expand;
@@ -108,6 +110,7 @@ int	heredoc_child_exec_main(const char *template, const char *delimiter,
 	if (rc == -1)
 		heredoc_handle_error(fd, template);
 	close(fd);
-	cleanup_and_exit(0);
+	register_heredoc(-1, NULL);
+	exit(0);
 	return (0);
 }

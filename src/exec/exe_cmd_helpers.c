@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:54:17 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 11:14:21 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 22:54:47 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	cleanup_child_and_exit(t_all_variables *all, int status)
 		free_envp(*envp_ref);
 		*envp_ref = NULL;
 	}
-	unregister_envp_ref();
+	register_envp_ref(NULL);
 	exit(status);
 }

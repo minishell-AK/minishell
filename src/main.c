@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:58:43 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/23 17:49:13 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 22:54:47 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int	main(int argc, char **argv, char **envp)
 	last_status = run_shell_loop(&my_env);
 	rl_clear_history();
 	free_envp(my_env);
-	unregister_envp_ref();
+	register_envp_ref(NULL);
 	return (last_status);
 }

@@ -6,15 +6,18 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:55:56 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/21 11:08:38 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 22:54:47 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+#include <dirent.h>
+#include <limits.h>
+
 static t_cleanup_state	*cleanup_state(void)
 {
-	static t_cleanup_state	st = {NULL, 0};
+	static t_cleanup_state	st = {NULL, 0, -1, NULL};
 
 	return (&st);
 }
@@ -36,9 +39,12 @@ void	register_envp_ref(char ***envp_ref)
 {
 	t_cleanup_state	*st;
 
-	if (!envp_ref)
-		return ;
 	st = cleanup_state();
+	if (!envp_ref)
+	{
+		st->envp_ref = NULL;
+		return ;
+	}
 	st->envp_ref = envp_ref;
 	if (!st->atexit_registered)
 	{
@@ -47,9 +53,13 @@ void	register_envp_ref(char ***envp_ref)
 	}
 }
 
-void	unregister_envp_ref(void)
+void	register_heredoc(int fd, const char *template)
 {
-	cleanup_state()->envp_ref = NULL;
+	t_cleanup_state	*st;
+
+	st = cleanup_state();
+	st->heredoc_fd = fd;
+	st->heredoc_template = (char *)template;
 }
 
 void	cleanup_and_exit(int status)
@@ -63,6 +73,10 @@ void	cleanup_and_exit(int status)
 		*(st->envp_ref) = NULL;
 	}
 	clear_history();
+	if (st->heredoc_fd > STDERR_FILENO)
+		close(st->heredoc_fd);
+	if (st->heredoc_template)
+		unlink(st->heredoc_template);
 	st->envp_ref = NULL;
 	exit(status);
 }

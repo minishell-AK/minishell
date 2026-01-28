@@ -6,13 +6,14 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 10:19:16 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/27 21:27:53 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 21:40:33 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	process_redirections(t_redir **redir_ptr, int *fd_in, int *fd_out, t_all_variables *head_list);
+static void	process_redirections(t_redir **redir_ptr, int *fd_in, int *fd_out,
+				t_all_variables *head_list);
 
 static int	process_in_redir(t_redir *redir, int fd_in)
 {
