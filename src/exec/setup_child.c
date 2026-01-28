@@ -6,13 +6,13 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 10:19:16 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/16 18:15:15 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 21:27:53 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	process_redirections(t_redir **redir_ptr, int *fd_in, int *fd_out);
+static void	process_redirections(t_redir **redir_ptr, int *fd_in, int *fd_out, t_all_variables *head_list);
 
 static int	process_in_redir(t_redir *redir, int fd_in)
 {
@@ -32,6 +32,7 @@ static int	process_in_redir(t_redir *redir, int fd_in)
 	}
 	else
 	{
+		close(fd_in);
 		newfd = get_fd(redir->file, redir->type);
 		if (newfd == -1)
 			return (-1);
@@ -51,7 +52,7 @@ static int	process_out_redir(t_redir *redir, int fd_out)
 	return (newfd);
 }
 
-void	setup_child_io(t_cmd *cmd, t_cmd *head_list)
+void	setup_child_io(t_cmd *cmd, t_all_variables *head_list)
 {
 	t_redir	*redir;
 	int		fd_in;
@@ -60,7 +61,7 @@ void	setup_child_io(t_cmd *cmd, t_cmd *head_list)
 	fd_in = cmd->pipein;
 	fd_out = cmd->pipeout;
 	redir = cmd->redirs;
-	process_redirections(&redir, &fd_in, &fd_out);
+	process_redirections(&redir, &fd_in, &fd_out, head_list);
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -71,10 +72,11 @@ void	setup_child_io(t_cmd *cmd, t_cmd *head_list)
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
 	}
-	close_all_pipes(head_list);
+	close_all_pipes(head_list->cmd);
 }
 
-static void	process_redirections(t_redir **redir_ptr, int *fd_in, int *fd_out)
+static void	process_redirections(t_redir **redir_ptr, int *fd_in, int *fd_out,
+	t_all_variables *head_list)
 {
 	t_redir	*r;
 
@@ -85,13 +87,19 @@ static void	process_redirections(t_redir **redir_ptr, int *fd_in, int *fd_out)
 		{
 			*fd_in = process_in_redir(r, *fd_in);
 			if (*fd_in == -1)
+			{
+				free_all_variables(head_list);
 				exit(1);
+			}
 		}
 		else if (r->type == REDIR_OUT || r->type == APPEND)
 		{
 			*fd_out = process_out_redir(r, *fd_out);
 			if (*fd_out == -1)
+			{
+				free_all_variables(head_list);
 				exit(1);
+			}
 		}
 		r = r->next;
 	}

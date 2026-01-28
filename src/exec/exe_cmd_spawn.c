@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:54:30 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/27 21:24:17 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 21:30:46 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static	void	child_prepare_and_exec(t_cmd *cuntent, t_all_variables *all)
 	setpgid(0, 0);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	setup_child_io(cuntent, all->cmd);
+	setup_child_io(cuntent, all);
 	exec_cmd_type(cuntent, all->env, all);
 }
 
@@ -89,36 +89,9 @@ int	spawn_children(t_all_variables *all_variables)
 		else if (all_variables->pids[i] > 0)
 		{
 			set_child_pgrp(i, all_variables);
-			if (cuntent->pipein > 2)
-			{
-				close(cuntent->pipein);
-				cuntent->pipein = -1;
-			}
-			if (cuntent->pipeout > 2)
-			{
-				close(cuntent->pipeout);
-				cuntent->pipeout = -1;
-			}
 		}
 		cuntent = cuntent->next;
 		i++;
 	}
-	/* Ensure no pipe fds remain open in parent */
-	cuntent = all_variables->cmd;
-	while (cuntent != NULL)
-	{
-		if (cuntent->pipein > 2)
-		{
-			close(cuntent->pipein);
-			cuntent->pipein = -1;
-		}
-		if (cuntent->pipeout > 2)
-		{
-			close(cuntent->pipeout);
-			cuntent->pipeout = -1;
-		}
-		cuntent = cuntent->next;
-	}
 	return (i);
 }
-
