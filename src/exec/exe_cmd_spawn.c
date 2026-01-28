@@ -6,13 +6,11 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:54:30 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/21 11:02:22 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 21:24:17 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 void	handle_wait_status(int status, int *last_status, int *seen_sigint)
 {

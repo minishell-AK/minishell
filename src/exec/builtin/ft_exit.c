@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 13:44:07 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/19 10:32:38 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 21:25:13 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	get_exit_status(char **args, int last_status)
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 		return (255);
 	}
-	if (args[2])
+	if (args[2] != NULL)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n",
 			STDERR_FILENO);
